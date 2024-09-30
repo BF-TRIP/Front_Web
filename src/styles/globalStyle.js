@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Pretendard', 'Tenada', sans-serif; 
+    font-family: 'Pretendard', 'Tenada'; 
     width: 100vw;
     height: 100vh;
     line-height: 1.5;

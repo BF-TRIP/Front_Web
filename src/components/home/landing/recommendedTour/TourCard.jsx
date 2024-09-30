@@ -22,7 +22,6 @@ const CardTitle = styled.div`
   bottom: 0.88rem;
   left: 0.81rem;
   color: #FFF;
-  font-family: Pretendard;
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;

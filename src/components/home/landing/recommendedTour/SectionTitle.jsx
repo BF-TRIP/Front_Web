@@ -9,7 +9,6 @@ const TitleContainer = styled.div`
 
 const TitleText = styled.h2`
   color: #000;
-  font-family: Pretendard;
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 600;
