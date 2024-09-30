@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
+import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
 
 const HomeContainer = styled.div`
   background-color: white;
@@ -16,7 +17,7 @@ const HomeContainer = styled.div`
 const HeaderBackground = styled.div`
   width: 100%;
   height: 14rem;
-  background: var(--Color-5, #FFE651);
+  background: #FFE023;
   padding-top: 1.5rem;
   padding-left: 1rem;
   z-index: 1;
@@ -56,7 +57,15 @@ const VoiceRecognitionButtonWrapper = styled.div`
 const RecommendedSectionContainer = styled.div`
   width: 100%;
   position: absolute; 
-  top: 12rem; 
+  top: 13.1rem; 
+  left: 0;
+  z-index: 4;
+`;
+
+const NearbySectionContainer = styled.div`
+  width: 100%;
+  position: absolute; 
+  top: 29.3rem; 
   left: 0;
   z-index: 4;
 `;
@@ -71,6 +80,9 @@ const Home = () => {
       <RecommendedSectionContainer>
         <RecommendedSection />
       </RecommendedSectionContainer>
+      <NearbySectionContainer>
+        <NearbyTourSection />
+      </NearbySectionContainer>
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
           <VoiceRecognitionButton />
