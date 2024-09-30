@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
 import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
+import VoiceRecognitionModal from '../../components/home/landing/voice/VoiceRecognitionModal'; 
 
 const HomeContainer = styled.div`
   background-color: white;
@@ -71,6 +73,16 @@ const NearbySectionContainer = styled.div`
 `;
 
 const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <HomeContainer>
       <HeaderBackground>
@@ -85,9 +97,10 @@ const Home = () => {
       </NearbySectionContainer>
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
-          <VoiceRecognitionButton />
+          <VoiceRecognitionButton onClick={openModal} />
         </VoiceRecognitionButtonWrapper>
       </VoiceRecognitionButtonBackground>
+      <VoiceRecognitionModal isOpen={isModalOpen} onClose={closeModal} />
     </HomeContainer>
   );
 };
