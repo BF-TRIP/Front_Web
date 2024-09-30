@@ -67,7 +67,7 @@ const VoiceRecognitionWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 6.37rem; /* 아이콘 위치 조정 */
+  margin-top: 6.37rem;
 `;
 
 const VoiceBackgroundImage = styled.img`

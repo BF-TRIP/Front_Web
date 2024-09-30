@@ -22,7 +22,6 @@ const CardContent = styled.div`
 
 const CardTitle = styled.div`
   color: #000;
-  font-family: Pretendard;
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
@@ -33,7 +32,6 @@ const CardTitle = styled.div`
 
 const CardSubtitle = styled.div`
   color: #000;
-  font-family: Pretendard;
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
