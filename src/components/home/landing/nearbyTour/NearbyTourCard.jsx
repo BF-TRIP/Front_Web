@@ -8,6 +8,9 @@ const CardContainer = styled.div`
   flex-direction: column; 
   flex-shrink: 0;
   overflow: hidden;
+  background-color: #fff;
+  border-radius: 1.25rem;
+  padding: 0.38rem;
 `;
 
 const CardImage = styled.img`
@@ -18,6 +21,7 @@ const CardImage = styled.img`
 `;
 
 const CardContent = styled.div`
+  margin-left: 0.2rem;
 `;
 
 const CardTitle = styled.div`
@@ -27,7 +31,7 @@ const CardTitle = styled.div`
   font-weight: 600;
   line-height: normal;
   margin-top: 0.62rem;
-  margin-bottom: 0.25rem; /* 제목과 부제목 사이의 간격 */
+  margin-bottom: 0.25rem; 
 `;
 
 const CardSubtitle = styled.div`
