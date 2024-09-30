@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
-import VoiceRecognitionButton from '../../components/home/landing/VoiceRecognitionButton'; // 음성인식 버튼 컴포넌트 임포트
-import VoiceInfoImage from '../../assets/images/VoiceInfo.png'; // 말풍선 이미지 임포트
+import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
+import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
 
 const HomeContainer = styled.div`
   background-color: white;
@@ -10,22 +10,22 @@ const HomeContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
-  position: relative; /* 절대 위치 기준 */
+  position: relative;
 `;
 
 const HeaderBackground = styled.div`
   width: 100%;
   height: 14rem;
-  background: var(--Color-5, #FFE651); 
+  background: var(--Color-5, #FFE651);
   padding-top: 1.5rem;
-  padding-left: 1rem; 
+  padding-left: 1rem;
   z-index: 1;
 `;
 
 const RoundedBackground = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #F6F5FA;
+  background-color: #f6f5fa;
   border-radius: 0.4rem;
   position: absolute;
   top: 9rem;
@@ -37,7 +37,7 @@ const RoundedBackground = styled.div`
 const VoiceRecognitionButtonBackground = styled.div`
   width: 9.75531rem;
   height: 10.33581rem;
-  background: #F6F5FA;
+  background: #f6f5fa;
   border-radius: 50%;
   position: absolute;
   top: 6rem;
@@ -50,15 +50,15 @@ const VoiceRecognitionButtonBackground = styled.div`
 `;
 
 const VoiceRecognitionButtonWrapper = styled.div`
-  margin-top: -2rem; /* 버튼을 위로 이동시킴 */
+  margin-top: -2rem;
 `;
 
-const VoiceInfoImageWrapper = styled.img`
-  position: absolute;
-  top: -2rem; /* 버튼 위에 위치시키는 조정값 */
-  left: 100%;
-  transform: translateX(-50%);
-  z-index: 4; /* 버튼보다 위에 위치 */
+const RecommendedSectionContainer = styled.div`
+  width: 100%;
+  position: absolute; 
+  top: 12rem; 
+  left: 0;
+  z-index: 4;
 `;
 
 const Home = () => {
@@ -68,11 +68,13 @@ const Home = () => {
         <Header />
       </HeaderBackground>
       <RoundedBackground />
+      <RecommendedSectionContainer>
+        <RecommendedSection />
+      </RecommendedSectionContainer>
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
-          <VoiceRecognitionButton /> {/* 음성인식 버튼 추가 */}
+          <VoiceRecognitionButton />
         </VoiceRecognitionButtonWrapper>
-        <VoiceInfoImageWrapper src={VoiceInfoImage} alt="Voice Info" />
       </VoiceRecognitionButtonBackground>
     </HomeContainer>
   );

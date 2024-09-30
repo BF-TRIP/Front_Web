@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  /* Pretendard 폰트 설정 */
   @font-face {
     font-family: 'Pretendard';
     src: url('/src/assets/fonts/Pretendard-Regular.ttf') format('truetype');
@@ -42,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Pretendard', 'Tenada', sans-serif; /* 기본적으로 Pretendard, 필요시 Tenada 사용 */
+    font-family: 'Pretendard', 'Tenada', sans-serif; 
     width: 100vw;
     height: 100vh;
     line-height: 1.5;

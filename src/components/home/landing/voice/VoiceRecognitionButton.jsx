@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import VoiceIconBackground from '../../../assets/images/VoiceBg.svg'; // 흰색 원 SVG
-import VoiceIcon from '../../../assets/images/VoiceIcon.svg'; // 음성인식 아이콘 SVG
+import VoiceIconBackground from '../../../../assets/images/VoiceBg.svg'; 
+import VoiceIcon from '../../../../assets/images/VoiceIcon.svg'; 
 
 const VoiceRecognitionButtonWrapper = styled.div`
   position: relative;
@@ -18,9 +18,9 @@ const VoiceIconBackgroundSVG = styled.img`
 `;
 
 const VoiceIconImage = styled.img`
-  width: 2.11938rem;  /* 음성인식 아이콘 크기 */
+  width: 2.11938rem;
   height: 3.33056rem;
-  z-index: 1;  /* 아이콘이 흰색 원 위에 표시되도록 */
+  z-index: 1; 
 `;
 
 const VoiceRecognitionButton = () => {
