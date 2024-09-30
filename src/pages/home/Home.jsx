@@ -12,8 +12,16 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
+  min-height: 100vh;  
+  overflow-y: scroll;  
+  padding-bottom: 100em; 
   position: relative;
+
+  &::-webkit-scrollbar {
+    display: none; 
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const HeaderBackground = styled.div`
