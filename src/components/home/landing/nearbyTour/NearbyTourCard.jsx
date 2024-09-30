@@ -36,7 +36,7 @@ const CardSubtitle = styled.div`
   font-family: Pretendard;
   font-size: 0.75rem;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: normal;
 `;
 
