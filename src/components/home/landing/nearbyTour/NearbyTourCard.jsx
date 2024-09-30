@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const CardContainer = styled.div`
-  width: 13.3125rem; 
+  width: 14.0625rem;
   height: auto; 
   display: flex;
   flex-direction: column; 
