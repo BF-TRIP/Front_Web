@@ -7,21 +7,21 @@ import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTo
 import VoiceRecognitionModal from '../../components/home/landing/voice/VoiceRecognitionModal'; 
 
 const HomeContainer = styled.div`
+  width: 390px;  /* 고정된 너비 */
+  height: 844px; /* 고정된 높이 */
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;  
-  overflow-y: scroll;  
-  padding-bottom: 100em; 
   position: relative;
-
+  overflow-y: auto; /* 내용이 많을 때만 스크롤 가능 */
+  
   &::-webkit-scrollbar {
-    display: none; 
+    display: none; /* 스크롤바 숨기기 */
   }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none;  /* IE 및 Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none;  /* Firefox에서 스크롤바 숨기기 */
 `;
 
 const HeaderBackground = styled.div`
