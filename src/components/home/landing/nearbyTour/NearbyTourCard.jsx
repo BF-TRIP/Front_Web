@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom'; 
 
 const CardContainer = styled.div`
   width: 14.0625rem;
@@ -11,6 +12,7 @@ const CardContainer = styled.div`
   background-color: #fff;
   border-radius: 1.25rem;
   padding: 0.38rem;
+  cursor: pointer;
 `;
 
 const CardImage = styled.img`
@@ -43,8 +45,14 @@ const CardSubtitle = styled.div`
 `;
 
 const NearbyTourCard = ({ image, title, subtitle }) => {
+  const navigate = useNavigate(); 
+
+  const handleCardClick = () => {
+    navigate('/nearby-list'); 
+  };
+
   return (
-    <CardContainer>
+    <CardContainer onClick={handleCardClick}> 
       <CardImage src={image} alt={title} />
       <CardContent>
         <CardTitle>{title}</CardTitle>
