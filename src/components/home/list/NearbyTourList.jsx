@@ -40,7 +40,7 @@ const NearbyTourList = () => {
             image={tour.image2}
             title={tour.title}
             subtitle={tour.subtitle}
-            icons={tour.icons}
+            accessibility={tour.accessibility} // icons 대신 accessibility 사용
           />
         </CardWrapper>
       ))}

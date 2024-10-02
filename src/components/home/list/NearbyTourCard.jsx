@@ -39,7 +39,7 @@ const CardTitle = styled.div`
   font-size: 1.375rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 150%; /* 2.0625rem */
+  line-height: 150%;
 `;
 
 const CardSubtitle = styled.div`
@@ -48,19 +48,46 @@ const CardSubtitle = styled.div`
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 1.125rem */
+  line-height: 150%;
   margin-left: 0.5rem;
 `;
 
 const AccessibilityIcons = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly; 
+  align-items: center;
   margin-top: 0.75rem;
+  gap: 1.4rem;
 `;
 
-const AccessibilityIcon = styled.img`
-  width: 24px;
-  height: 24px;
+const WheelchairIconStyled = styled.img`
+  width: 1.75rem;
+  height: 2.125rem;
+  flex-shrink: 0;
+`;
+
+const FamilyIconStyled = styled.img`
+  width: 2.125rem;
+  height: 2.00719rem;
+  flex-shrink: 0;
+`;
+
+const StrollerIconStyled = styled.img`
+  width: 2.125rem;
+  height: 1.94506rem;
+  flex-shrink: 0;
+`;
+
+const VisualIconStyled = styled.img`
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+`;
+
+const HearingIconStyled = styled.img`
+  width: 1.625rem;
+  height: 2.375rem;
+  flex-shrink: 0;
 `;
 
 const NearbyTourCard = ({
@@ -84,19 +111,19 @@ const NearbyTourCard = ({
       <CardImage src={image} alt={title} />
       <AccessibilityIcons>
         {accessibility.wheelchair && (
-          <AccessibilityIcon src={WheelchairIcon} alt="Wheelchair accessible" />
+          <WheelchairIconStyled src={WheelchairIcon} alt="Wheelchair accessible" />
         )}
         {accessibility.family && (
-          <AccessibilityIcon src={FamilyIcon} alt="Family friendly" />
+          <FamilyIconStyled src={FamilyIcon} alt="Family friendly" />
         )}
         {accessibility.stroller && (
-          <AccessibilityIcon src={StrollerIcon} alt="Stroller accessible" />
+          <StrollerIconStyled src={StrollerIcon} alt="Stroller accessible" />
         )}
         {accessibility.visual && (
-          <AccessibilityIcon src={VisualIcon} alt="Visual aid available" />
+          <VisualIconStyled src={VisualIcon} alt="Visual aid available" />
         )}
         {accessibility.hearing && (
-          <AccessibilityIcon src={HearingIcon} alt="Hearing aid available" />
+          <HearingIconStyled src={HearingIcon} alt="Hearing aid available" />
         )}
       </AccessibilityIcons>
     </CardContainer>
