@@ -1,22 +1,33 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
+import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
+import VoiceRecognitionModal from '../../components/home/landing/voice/VoiceRecognitionModal'; 
 
 const HomeContainer = styled.div`
+  width: 390px;  /* 고정된 너비 */
+  height: 844px; /* 고정된 높이 */
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
   position: relative;
+  overflow-y: auto; /* 내용이 많을 때만 스크롤 가능 */
+  
+  &::-webkit-scrollbar {
+    display: none; /* 스크롤바 숨기기 */
+  }
+  -ms-overflow-style: none;  /* IE 및 Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none;  /* Firefox에서 스크롤바 숨기기 */
 `;
 
 const HeaderBackground = styled.div`
   width: 100%;
   height: 14rem;
-  background: var(--Color-5, #FFE651);
+  background: #FFE023;
   padding-top: 1.5rem;
   padding-left: 1rem;
   z-index: 1;
@@ -56,12 +67,30 @@ const VoiceRecognitionButtonWrapper = styled.div`
 const RecommendedSectionContainer = styled.div`
   width: 100%;
   position: absolute; 
-  top: 12rem; 
+  top: 13.1rem; 
+  left: 0;
+  z-index: 4;
+`;
+
+const NearbySectionContainer = styled.div`
+  width: 100%;
+  position: absolute; 
+  top: 29.3rem; 
   left: 0;
   z-index: 4;
 `;
 
 const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <HomeContainer>
       <HeaderBackground>
@@ -71,11 +100,15 @@ const Home = () => {
       <RecommendedSectionContainer>
         <RecommendedSection />
       </RecommendedSectionContainer>
+      <NearbySectionContainer>
+        <NearbyTourSection />
+      </NearbySectionContainer>
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
-          <VoiceRecognitionButton />
+          <VoiceRecognitionButton onClick={openModal} />
         </VoiceRecognitionButtonWrapper>
       </VoiceRecognitionButtonBackground>
+      <VoiceRecognitionModal isOpen={isModalOpen} onClose={closeModal} />
     </HomeContainer>
   );
 };

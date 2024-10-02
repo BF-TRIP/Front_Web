@@ -36,12 +36,12 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html {
-    font-size: 100%;
+  html, body {
+    height: 100%; /* body와 html의 높이를 100%로 설정 */
   }
 
   body {
-    font-family: 'Pretendard', 'Tenada', sans-serif; 
+    font-family: 'Pretendard', 'Tenada'; 
     width: 100vw;
     height: 100vh;
     line-height: 1.5;
@@ -50,8 +50,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    background-color: #e0e0e0;
+    background-color: #e0e0e0; /* 배경색이 전체에 적용되도록 설정 */
   }
 
   #root {

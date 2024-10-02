@@ -15,7 +15,7 @@ const TitleText = styled.h2`
   line-height: 1.375rem; /* 110% */
 `;
 
-const SectionTitle = ({ title }) => {
+const NearbySectionTitle = ({ title }) => {
   return (
     <TitleContainer>
       <TitleText>{title}</TitleText>
@@ -23,8 +23,8 @@ const SectionTitle = ({ title }) => {
   );
 };
 
-SectionTitle.propTypes = {
+NearbySectionTitle.propTypes = {
   title: PropTypes.string.isRequired,  
 };
 
-export default SectionTitle;
+export default NearbySectionTitle;
