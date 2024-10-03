@@ -7,7 +7,7 @@ const ListContainer = styled.div`
   height: 100%;
   overflow-y: scroll;
   padding: 1rem;
-  padding-bottom: 100em;
+  padding-bottom: 10em;
 
   &::-webkit-scrollbar {
     display: none; 
