@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import DetailTop from '../../../components/home/detail/DetailTop'; 
 import TitleSection from '../../../components/home/detail/TitleSection'; 
+import InfoSection from '../../../components/home/detail/InfoSection'; // InfoSection import
 
 const DetailPageContainer = styled.div`
   width: 390px;
@@ -35,7 +36,11 @@ const Detail = () => {
         description={description}
         address={address}
       />
-       <SectionDivider /> {/* 섹션 간 구분선 */}
+      <SectionDivider /> {/* 섹션 간 구분선 */}
+      
+      {/* InfoSection 추가 */}
+      <InfoSection />
+
     </DetailPageContainer>
   );
 };
