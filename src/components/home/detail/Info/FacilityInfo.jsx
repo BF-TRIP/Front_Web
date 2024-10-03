@@ -43,8 +43,16 @@ width: 1.80969rem;
 height: 2.64488rem;
 `;
 
+const Divider = styled.div`
+  width: 21.875rem;
+  height: 0.0625rem;
+  background-color: #F5F5F5;
+  margin: 1rem 0; 
+`;
+
 const FacilityInfo = ({ wheelchair, family, stroller, visual, hearing }) => {
   return (
+    <>
     <FacilityInfoContainer>
       <AccessibilityIcons>
         {wheelchair && (
@@ -64,6 +72,8 @@ const FacilityInfo = ({ wheelchair, family, stroller, visual, hearing }) => {
         )}
       </AccessibilityIcons>
     </FacilityInfoContainer>
+    <Divider />
+    </>
   );
 };
 
