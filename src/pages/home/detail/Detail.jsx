@@ -1,13 +1,21 @@
 import styled from 'styled-components';
 import DetailTop from '../../../components/home/detail/DetailTop'; 
 import TitleSection from '../../../components/home/detail/TitleSection'; 
-import InfoSection from '../../../components/home/detail/InfoSection'; // InfoSection import
+import InfoSection from '../../../components/home/detail/InfoSection'; 
 
 const DetailPageContainer = styled.div`
   width: 390px;
   height: 844px;
   background-color: #fff;
   overflow-y: auto;
+  padding-bottom: 10em;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const SectionDivider = styled.div`
