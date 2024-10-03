@@ -7,8 +7,7 @@ const ListContainer = styled.div`
   height: 100%;
   overflow-y: scroll;
   padding: 1rem;
-  padding-bottom: 10em;
-  border: 1px solid red;
+  padding-bottom: 100em;
 
   &::-webkit-scrollbar {
     display: none; 
@@ -40,7 +39,7 @@ const NearbyTourList = () => {
             image={tour.image2}
             title={tour.title}
             subtitle={tour.subtitle}
-            accessibility={tour.accessibility} // icons 대신 accessibility 사용
+            accessibility={tour.accessibility}
           />
         </CardWrapper>
       ))}
