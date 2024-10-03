@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom'; 
 
 const CardContainer = styled.div`
   width: 12.1875rem;
@@ -9,6 +10,7 @@ const CardContainer = styled.div`
   border-radius: 1.25rem;
   overflow: hidden;
   position: relative;
+  cursor: pointer; 
 `;
 
 const CardImage = styled.img`
@@ -29,8 +31,14 @@ const CardTitle = styled.div`
 `;
 
 const TourCard = ({ image, title }) => {
+  const navigate = useNavigate(); 
+
+  const handleCardClick = () => {
+    navigate('/recommended-list');
+  };
+
   return (
-    <CardContainer>
+    <CardContainer onClick={handleCardClick}> 
       <CardImage src={image} alt={title} />
       <CardTitle>{title}</CardTitle>
     </CardContainer>
