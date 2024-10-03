@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import nearbyTourData from '../../../utils/nearbyTourData'; 
-import NearbyTourListCard from './NearbyTourCard';
+import recommendedTourData from '../../../utils/recommendData'
+import RecommendedTourListCard from './RecommendedTourCard';
 
 const ListContainer = styled.div`
   width: 100%;
@@ -22,20 +22,20 @@ const Title = styled.h3`
   margin-left: 0.2rem;
   margin-top: 1.75rem;
   margin-bottom: 1.79rem;
-  line-height: 1.375rem; /* 110% */
+  line-height: 1.375rem;
 `;
 
 const CardWrapper = styled.div`
   margin-bottom: 1.19rem;
 `;
 
-const NearbyTourList = () => {
+const RecommendedTourList = () => {
   return (
     <ListContainer>
-      <Title>내 위치 주변 관광지 리스트</Title>
-      {nearbyTourData.map((tour, index) => (
+      <Title>OO님이 좋아할만한 관광지 리스트</Title>
+      {recommendedTourData.map((tour, index) => (
         <CardWrapper key={index}>
-          <NearbyTourListCard
+          <RecommendedTourListCard
             image={tour.image2}
             title={tour.title}
             subtitle={tour.subtitle}
@@ -47,4 +47,4 @@ const NearbyTourList = () => {
   );
 };
 
-export default NearbyTourList;
+export default RecommendedTourList;

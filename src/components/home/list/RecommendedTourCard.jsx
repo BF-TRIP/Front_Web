@@ -90,7 +90,7 @@ const HearingIconStyled = styled.img`
   flex-shrink: 0;
 `;
 
-const NearbyTourCard = ({
+const RecommendedTourCard = ({
   image,
   title,
   subtitle,
@@ -130,7 +130,7 @@ const NearbyTourCard = ({
   );
 };
 
-NearbyTourCard.propTypes = {
+RecommendedTourCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
@@ -143,4 +143,4 @@ NearbyTourCard.propTypes = {
   }),
 };
 
-export default NearbyTourCard;
+export default RecommendedTourCard;
