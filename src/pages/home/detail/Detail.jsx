@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import DetailTop from '../../../components/home/detail/DetailTop'; 
 import TitleSection from '../../../components/home/detail/TitleSection'; 
@@ -25,30 +26,23 @@ const SectionDivider = styled.div`
 `;
 
 const Detail = () => {
-  const images = [
-    '/path/to/image1.jpg',
-    '/path/to/image2.jpg',
-    '/path/to/image3.jpg',
-  ]; 
-
-  // 임시 데이터
-  const placeName = '덕수궁';
-  const description = '덕수궁(德壽宮)은 서울 중구 정동(貞洞)에 있는 조선과 대한제국의 궁궐이다. 대한민국의 사적으로 지정되어 있다. 본래 이름은 경운궁(慶運宮)으로, 아관파천 이후 환궁하여 법궁으로 사용되다가 순종 즉위 후 궁의 이름을 현재의 덕수궁으로 변경하였다.';
-  const address = '서울특별시 중구 세종대로 99';
+  const location = useLocation();  
+  
+  // 전달받은 데이터가 없을 경우 기본값 설정
+  const { images = [], placeName = '장소 이름', description = '설명', address = '주소' } = location.state || {};
 
   return (
     <DetailPageContainer>
       <DetailTop images={images} />
       <TitleSection 
         placeName={placeName}
-        description={description}
+        description={description}  // description 데이터 사용
         address={address}
       />
       <SectionDivider /> {/* 섹션 간 구분선 */}
       
       {/* InfoSection 추가 */}
       <InfoSection />
-
     </DetailPageContainer>
   );
 };
