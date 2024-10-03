@@ -9,6 +9,11 @@ const DetailPageContainer = styled.div`
   overflow-y: auto;
 `;
 
+const SectionDivider = styled.div`
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--Color-7, #F1F1F1);
+`;
 
 const Detail = () => {
   const images = [
@@ -30,6 +35,7 @@ const Detail = () => {
         description={description}
         address={address}
       />
+       <SectionDivider /> {/* 섹션 간 구분선 */}
     </DetailPageContainer>
   );
 };
