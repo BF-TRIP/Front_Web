@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import FacilityInfo from './Info/FacilityInfo';
+import DetailedFacilityInfo from './Info/DetailedFacilityInfo'; // 추가된 컴포넌트 임포트
 
 const InfoSectionContainer = styled.div`
   padding: 1rem;
@@ -25,6 +26,13 @@ const InfoSection = () => {
         stroller={true} 
         visual={true} 
         hearing={true} 
+      />
+      
+      {/* 세부 시설물 정보 섹션 추가 */}
+      <SectionTitle>세부 시설물 정보</SectionTitle>
+      <DetailedFacilityInfo
+        wheelchairInfo="장애인주차장, 휠체어 대여"
+        visualImpairmentInfo="점자블록, 보조견 동반 가능"
       />
     </InfoSectionContainer>
   );
