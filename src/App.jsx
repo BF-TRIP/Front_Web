@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import Course from './pages/course/Course';
 import Onboarding from './pages/onboarding/Onboarding1';
 import RecommendedList from './pages/home/list/RecommendedList';
+import Detail from './pages/home/detail/Detail'; 
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/course" element={<Course />} />
         <Route path="/on-boarding1" element={<Onboarding />} />
-        <Route path="/recommended-list" element={<RecommendedList />} /> {/* 경로 수정 */}
+        <Route path="/recommended-list" element={<RecommendedList />} />
+        <Route path="/detail" element={<Detail />} /> 
       </Routes>
     </Router>
   );
