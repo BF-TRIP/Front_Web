@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Header from '../../components/common/Header'; // Header 컴포넌트 import
+import MyTourList from '../../components/savelist/MyTourList'; // MyTourList 컴포넌트 import
 
 const SaveListContainer = styled.div`
   width: 390px;
@@ -20,7 +21,7 @@ const Savelist = () => {
   return (
     <SaveListContainer>
       <Header />
-      {/* 다른 컴포넌트들 추가 예정 */}
+      <MyTourList /> {/* 내가 만든 관광지 컴포넌트 추가 */}
     </SaveListContainer>
   );
 };
