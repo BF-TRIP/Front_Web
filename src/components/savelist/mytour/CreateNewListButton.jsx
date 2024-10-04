@@ -1,5 +1,7 @@
+import { useState } from 'react'; // 모달 상태 관리를 위해 useState 추가
 import styled from 'styled-components';
 import plusIcon from '../../../assets/images/plus.svg'; 
+import NewListModal from '../newlist/NewListModal'; // 모달 컴포넌트 불러오기
 
 const NewListButtonContainer = styled.div`
   width: 10.625rem;
@@ -39,11 +41,36 @@ const ButtonText = styled.p`
 `;
 
 const CreateNewListButton = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
+
+  const handleConfirm = () => {
+    // 리스트 생성 로직 처리
+    console.log('리스트가 생성되었습니다!');
+    setIsModalOpen(false); // 모달 닫기
+  };
+
   return (
-    <NewListButtonContainer>
-      <PlusIcon src={plusIcon} alt="새 리스트 생성" />
-      <ButtonText>새로운 리스트를{`\n`}생성해보세요!</ButtonText>
-    </NewListButtonContainer>
+    <>
+      <NewListButtonContainer onClick={handleOpenModal}>
+        <PlusIcon src={plusIcon} alt="새 리스트 생성" />
+        <ButtonText>새로운 리스트를{`\n`}생성해보세요!</ButtonText>
+      </NewListButtonContainer>
+      
+      {/* 모달 추가 */}
+      <NewListModal
+        show={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirm}
+      />
+    </>
   );
 };
 
