@@ -17,7 +17,7 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   position: fixed;
-  bottom: 6%;
+  bottom: 0%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -95,7 +95,7 @@ const ConfirmButton = styled.button`
   margin-left: auto;
   margin-right: auto;
   outline: none;
-  
+
   &:focus {
     outline: none;
   }
