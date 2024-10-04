@@ -21,6 +21,7 @@ const NearbyTourCardList = () => {
           image={tour.image}
           title={tour.title}
           subtitle={tour.subtitle}
+          description={tour.description}
         />
       ))}
     </CardListContainer>

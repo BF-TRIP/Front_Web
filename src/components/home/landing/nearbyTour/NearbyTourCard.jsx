@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom'; 
 
 const CardContainer = styled.div`
   width: 14.0625rem;
@@ -11,6 +12,7 @@ const CardContainer = styled.div`
   background-color: #fff;
   border-radius: 1.25rem;
   padding: 0.38rem;
+  cursor: pointer;
 `;
 
 const CardImage = styled.img`
@@ -42,9 +44,22 @@ const CardSubtitle = styled.div`
   line-height: normal;
 `;
 
-const NearbyTourCard = ({ image, title, subtitle }) => {
+const NearbyTourCard = ({ image, title, subtitle, description }) => {
+  const navigate = useNavigate(); 
+
+  const handleCardClick = () => {
+    navigate('/detail', { 
+      state: { 
+        images: [image],  // DetailTop에 들어가는 images 배열
+        placeName: title, // 장소 이름
+        description: description, // 전달된 description 사용
+        address: subtitle  // subtitle을 address로 사용
+      }
+    }); 
+  };
+
   return (
-    <CardContainer> 
+    <CardContainer onClick={handleCardClick}> 
       <CardImage src={image} alt={title} />
       <CardContent>
         <CardTitle>{title}</CardTitle>
@@ -58,6 +73,7 @@ NearbyTourCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,  // description 추가
 };
 
 export default NearbyTourCard;
