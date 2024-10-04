@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import headerImage from '../../assets/images/header.png'; 
 
 const HeaderContainer = styled.div`
-  width: 24.375rem;
-  height: 4.25rem;
+  width: 100%;
+  height: 3.625rem;
   flex-shrink: 0;
-  background: #FFF;
+  flex-shrink: 0;
+  background: #FFE023;
   display: flex;
 `;
 
 const HeaderImage = styled.img`
-  margin-top: 0.69rem;
+  margin-top: 1.05rem;
   margin-left: 1.19rem;
   width: auto;
-  height: 2.7rem;  
+  height: 1.5rem;  
 `;
 
 const Divider = styled.div`
