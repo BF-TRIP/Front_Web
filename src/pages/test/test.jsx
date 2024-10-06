@@ -1,4 +1,38 @@
 import { useState } from "react";
+import styled from "styled-components";
+
+// 스타일 정의
+const CenterElement = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+`;
+
+const DisplayText = styled.p`
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: orange;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darkorange;
+  }
+
+  &:active {
+    background-color: red;
+  }
+`;
 
 function Text() {
   const [displayText, setDisplayText] = useState("이 곳은 웹 뷰입니다. 넘어오지 마십쇼 휴먼.");
@@ -27,33 +61,25 @@ function Text() {
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.textfieldText) {
       window.webkit.messageHandlers.textfieldText.postMessage(javascriptArray[jsIndex]);
     }
-  
-    // javascriptArray 인덱스 순환
+
     jsIndex++;
     if (jsIndex === javascriptArray.length) {
       jsIndex = 0;
     }
-  
-    // textArray 인덱스 순환 및 상태 업데이트
+
     currentIndex++;
     if (currentIndex === textArray.length) {
       currentIndex = 0;
     }
-  
+
     setDisplayText(textArray[currentIndex]);
   };
-  
 
   return (
-    <div className="center-element">
-      <p className="margin-bottom" id="displayText">
-        {displayText}
-      </p>
-
-      <button onClick={handleClick} className="button-normal bg-orange margin-bottom">
-        자바스크립트 버튼
-      </button>
-    </div>
+    <CenterElement>
+      <DisplayText>{displayText}</DisplayText>
+      <Button onClick={handleClick}>자바스크립트 버튼</Button>
+    </CenterElement>
   );
 }
 
