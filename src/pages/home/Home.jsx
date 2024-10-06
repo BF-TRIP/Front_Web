@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
@@ -83,31 +82,36 @@ const NearbySectionContainer = styled.div`
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [jsIndex, setJsIndex] = useState(0);
+  const javascriptArray = [
+    "웹 뷰에서 왔습니다.",
+    "아이폰 참 좋네요 ㅎㅎㅎ",
+    "🧻🧻🧻🧻🧻🧻",
+    "집들이 선물입니다",
+    "The End"
+  ];
 
   const openModal = () => {
     setIsModalOpen(true);
+    // 버튼 클릭 시 메시지를 보내는 로직 추가
+    sendMessageToiOS();
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // JavaScript와 iOS 간 통신 함수
-  const javaScriptToIOS = () => {
-    if (window.webkit?.messageHandlers?.serverEvent) {
-      console.log('Send Event');
-      window.webkit.messageHandlers.serverEvent.postMessage('Hello iOS');
-    } else {
-      console.log('Cannot send event');
+  const sendMessageToiOS = () => {
+    let text = javascriptArray[jsIndex];
+    window.webkit.messageHandlers.textfieldText.postMessage(text);
+    
+    // 인덱스 업데이트
+    let newIndex = jsIndex + 1;
+    if (newIndex >= javascriptArray.length) {
+      newIndex = 0;
     }
+    setJsIndex(newIndex);
   };
-
-  // iOS에서 자바스크립트로 이벤트 발생 함수
-  useEffect(() => {
-    window.iOSToJavaScript = function() {
-      console.log('Event Occurred');
-    };
-  }, []);
 
   return (
     <HomeContainer>
@@ -123,12 +127,7 @@ const Home = () => {
       </NearbySectionContainer>
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
-          <VoiceRecognitionButton
-            onClick={() => {
-              openModal();
-              javaScriptToIOS(); // VoiceRecognitionButton 클릭 시 iOS로 이벤트 전송
-            }}
-          />
+          <VoiceRecognitionButton onClick={openModal} />
         </VoiceRecognitionButtonWrapper>
       </VoiceRecognitionButtonBackground>
       <VoiceRecognitionModal isOpen={isModalOpen} onClose={closeModal} />
