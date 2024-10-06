@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
@@ -91,6 +92,23 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
+  // JavaScript와 iOS 간 통신 함수
+  const javaScriptToIOS = () => {
+    if (window.webkit?.messageHandlers?.serverEvent) {
+      console.log('Send Event');
+      window.webkit.messageHandlers.serverEvent.postMessage('Hello iOS');
+    } else {
+      console.log('Cannot send event');
+    }
+  };
+
+  // iOS에서 자바스크립트로 이벤트 발생 함수
+  useEffect(() => {
+    window.iOSToJavaScript = function() {
+      console.log('Event Occurred');
+    };
+  }, []);
+
   return (
     <HomeContainer>
       <HeaderBackground>
@@ -105,7 +123,12 @@ const Home = () => {
       </NearbySectionContainer>
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
-          <VoiceRecognitionButton onClick={openModal} />
+          <VoiceRecognitionButton
+            onClick={() => {
+              openModal();
+              javaScriptToIOS(); // VoiceRecognitionButton 클릭 시 iOS로 이벤트 전송
+            }}
+          />
         </VoiceRecognitionButtonWrapper>
       </VoiceRecognitionButtonBackground>
       <VoiceRecognitionModal isOpen={isModalOpen} onClose={closeModal} />
