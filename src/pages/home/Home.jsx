@@ -82,35 +82,13 @@ const NearbySectionContainer = styled.div`
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [jsIndex, setJsIndex] = useState(0);
-  const javascriptArray = [
-    "웹 뷰에서 왔습니다.",
-    "아이폰 참 좋네요 ㅎㅎㅎ",
-    "🧻🧻🧻🧻🧻🧻",
-    "집들이 선물입니다",
-    "The End"
-  ];
 
   const openModal = () => {
     setIsModalOpen(true);
-    // 버튼 클릭 시 메시지를 보내는 로직 추가
-    sendMessageToiOS();
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-
-  const sendMessageToiOS = () => {
-    let text = javascriptArray[jsIndex];
-    window.webkit.messageHandlers.textfieldText.postMessage(text);
-    
-    // 인덱스 업데이트
-    let newIndex = jsIndex + 1;
-    if (newIndex >= javascriptArray.length) {
-      newIndex = 0;
-    }
-    setJsIndex(newIndex);
   };
 
   return (
