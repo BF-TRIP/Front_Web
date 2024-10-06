@@ -6,6 +6,7 @@ import Onboarding from './pages/onboarding/Onboarding1';
 import RecommendedList from './pages/home/list/RecommendedList';
 import Detail from './pages/home/detail/Detail'; 
 import Savelist from './pages/savelist/Savelist'; 
+import Addlist from './pages/savelist/Addlist'; 
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/recommended-list" element={<RecommendedList />} />
         <Route path="/detail" element={<Detail />} /> 
         <Route path="/save-list" element={<Savelist />} /> 
+        <Route path="/add-list" element={<Addlist />} /> 
       </Routes>
     </Router>
   );
