@@ -96,7 +96,7 @@ const Home = () => {
   const javaScriptToIOS = () => {
     if (window.webkit?.messageHandlers?.serverEvent) {
       console.log('Send Event');
-      window.webkit.messageHandlers.serverEvent.postMessage('Hello iOS');
+      window.webkit.messageHandlers.serverEvent.postMessage('Voice');
     } else {
       console.log('Cannot send event');
     }
