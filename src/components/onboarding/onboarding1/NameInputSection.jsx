@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import number1Icon from '../../../assets/images/number1.png'; // 1번 아이콘 경로
+import number1Icon from '../../../assets/images/number1.png';
 
 const SectionContainer = styled.div`
   display: flex;
@@ -38,8 +38,11 @@ const InputField = styled.input`
   background: #fffce7;
   box-shadow: 0px 4px 12.1px 0px rgba(0, 0, 0, 0.06);
   padding-left: 1rem;
+  color: #333;
   font-size: 1rem;
-  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
   outline: none;
 `;
 

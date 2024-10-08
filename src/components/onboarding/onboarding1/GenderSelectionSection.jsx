@@ -7,7 +7,6 @@ const SectionContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
-  margin-top: 1rem;
 `;
 
 const Icon = styled.img`
@@ -46,6 +45,7 @@ const GenderButton = styled.button`
   font-family: Inter, sans-serif;
   cursor: pointer;
   outline: none;
+  color: ${({ selected }) => (selected ? '#333' : '#757575')}; 
 
   &:focus {
     outline: none;
@@ -57,13 +57,9 @@ const GenderButton = styled.button`
     border: ${({ selected }) => (selected ? '1px solid #FFE54A' : '1px solid #F1F1F1')}; /* hover 시에도 동일한 border */
   }
 
-  color: #ABABAB;
-  font-size: 1rem;
-  font-style: normal;
   font-weight: 600;
   line-height: normal;
 `;
-
 
 const GenderSelectionSection = ({ selectedGender, onGenderSelect }) => {
   return (
