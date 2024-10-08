@@ -11,7 +11,6 @@ const ButtonContainer = styled.button`
   gap: 0.625rem;
   flex-shrink: 0;
   border-radius: 1.375rem;
-  border: 1px solid var(--Color-12, #FFFCE7);
   background: var(--Color-12, #FFFCE7);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.09);
   cursor: pointer;
