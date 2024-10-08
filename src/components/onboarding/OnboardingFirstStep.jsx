@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
+import { useNavigate } from 'react-router-dom'; 
 import Header from './Header'; 
 import NameInputSection from './onboarding1/NameInputSection'; 
 import GenderSelectionSection from './onboarding1/GenderSelectionSection';
@@ -21,31 +22,53 @@ const InfoContainer = styled.div`
   flex-grow: 1; 
 `;
 
-const OnboardingFirstStep = ({ onBack, progress, onNext }) => {
-  const [name, setName] = useState(''); // 이름 입력 상태 관리
-  const [gender, setGender] = useState(''); // 성별 선택 상태 관리
-  const [year, setYear] = useState(''); // 생년 상태 관리
-  const [month, setMonth] = useState(''); // 월 상태 관리
-  const [day, setDay] = useState(''); // 일 상태 관리
+const OnboardingFirstStep = ({ onBack }) => {
+  const [name, setName] = useState(''); 
+  const [gender, setGender] = useState(''); 
+  const [year, setYear] = useState(''); 
+  const [month, setMonth] = useState(''); 
+  const [day, setDay] = useState(''); 
+  const [progress, setProgress] = useState(0); 
+
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    // 페이지 로드 시 0에서 33%까지 부드럽게 진행
+    const timeout = setTimeout(() => {
+      setProgress(33); 
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
 
   const handleGenderSelect = (selectedGender) => {
-    setGender(selectedGender); // 성별 선택 상태 업데이트
+    setGender(selectedGender);
   };
 
   const handleYearChange = (e) => {
-    setYear(e.target.value); // 생년 상태 업데이트
+    setYear(e.target.value);
   };
 
   const handleMonthChange = (e) => {
-    setMonth(e.target.value); // 월 상태 업데이트
+    setMonth(e.target.value);
   };
 
   const handleDayChange = (e) => {
-    setDay(e.target.value); // 일 상태 업데이트
+    setDay(e.target.value);
+  };
+
+  const handleNext = () => {
+    // 다음 버튼 클릭 시 33%에서 50%로 부드럽게 증가
+    setProgress(50);
+    
+    // 0.5초 뒤에 두 번째 페이지로 이동
+    setTimeout(() => {
+      navigate('/onboarding-second');
+    }, 500);
   };
 
   return (
@@ -63,15 +86,13 @@ const OnboardingFirstStep = ({ onBack, progress, onNext }) => {
           onDayChange={handleDayChange} 
         />
       </InfoContainer>
-      <NextButton onClick={onNext} /> 
+      <NextButton onClick={handleNext} /> 
     </Container>
   );
 };
 
 OnboardingFirstStep.propTypes = {
   onBack: PropTypes.func.isRequired, 
-  progress: PropTypes.number.isRequired, 
-  onNext: PropTypes.func.isRequired, 
 };
 
 export default OnboardingFirstStep;
