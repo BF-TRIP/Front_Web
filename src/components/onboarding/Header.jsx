@@ -12,12 +12,11 @@ const HeaderContainer = styled.div`
 `;
 
 const BackButton = styled.img`
-  width: 1rem;
-  height: 1.5rem;
+  width: 0.75rem;
   cursor: pointer;
   position: absolute;
   left: 1rem;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
 `;
 
@@ -34,8 +33,9 @@ const ProgressBar = styled.div`
   height: 100%;
   width: ${({ progress }) => progress}%;
   background-color: var(--Color-5, #FFE651);
-  transition: width 0.3s ease;
+  transition: width 0.6s ease-in-out; /* 애니메이션 속도 및 효과 조정 */
 `;
+
 
 const Header = ({ onBack, progress, showBackButton }) => {
   return (
@@ -50,15 +50,14 @@ const Header = ({ onBack, progress, showBackButton }) => {
   );
 };
 
-// PropTypes 추가
 Header.propTypes = {
   onBack: PropTypes.func,
   progress: PropTypes.number.isRequired,
-  showBackButton: PropTypes.bool, // 뒤로 가기 버튼 표시 여부 prop 추가
+  showBackButton: PropTypes.bool,
 };
 
 Header.defaultProps = {
-  showBackButton: false, // 기본값은 false로 설정
+  showBackButton: false, 
 };
 
 export default Header;
