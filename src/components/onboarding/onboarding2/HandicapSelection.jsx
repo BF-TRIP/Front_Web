@@ -123,8 +123,8 @@ const HandicapSelection = ({ onSelectionChange, selectedHandicaps }) => {
 
         {/* 청각장애인 버튼 */}
         <HandicapButton
-          selected={selections.deafHandicap}
-          onClick={() => toggleHandicap('deafHandicap')}
+          selected={selections.hearingHandicap} 
+          onClick={() => toggleHandicap('hearingHandicap')} 
         >
           <HandicapIcon src={deafIcon} alt="청각장애인 아이콘" iconWidth="3.625rem" iconHeight="4.36556rem" />
           <HandicapText>청각장애인</HandicapText>

@@ -48,7 +48,7 @@ const OnboardingFinalStep = ({ onConfirm }) => {
           senior: selectedHandicaps.senior || false,
           wheelchair: selectedHandicaps.wheelchair || false,
           blindHandicap: selectedHandicaps.blindHandicap || false,
-          hearingHandicap: false,
+          hearingHandicap: selectedHandicaps.hearingHandicap || false,
           infantsFamily: selectedHandicaps.infantsFamily || false,
           travelType: selectedStyles
         };
