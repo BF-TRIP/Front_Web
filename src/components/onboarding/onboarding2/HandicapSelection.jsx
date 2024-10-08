@@ -5,12 +5,13 @@ import seniorIcon from '../../../assets/images/senior.png';
 import wheelchairIcon from '../../../assets/images/wheelchair.png'; 
 import blindIcon from '../../../assets/images/blind.png'; 
 import infantIcon from '../../../assets/images/infant.png';
+import deafIcon from '../../../assets/images/deaf.png'; 
 
 const ButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.8rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-left: 0.3rem;
 `;
 
@@ -55,38 +56,21 @@ const HandicapText = styled.div`
   text-align: left;
 `;
 
-const NoOptionButton = styled.button`
-  display: flex;
-  width: 22rem;
-  height: 4.125rem;
+const NoOptionButton = styled(HandicapButton)`
   justify-content: center;
   align-items: center;
-  border-radius: 0.875rem;
-  background: ${({ selected }) => (selected ? '#D3D3D3' : '#E6E6E6')}; // 선택 시 색상 변경
-  box-shadow: 0px 4px 12.1px 0px rgba(0, 0, 0, 0.06);
-  border: none;
-  cursor: pointer;
-  outline: none;
-  color: ${({ selected }) => (selected ? '#4D4D4D' : '#A6A6A6')};
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 150%; /* 1.5rem */
-  letter-spacing: -0.011rem;
-  margin-top: 1.06rem;
-  margin-left: 0.3rem;
+  background: ${({ selected }) => (selected ? '#D3D3D3' : '#F1F1F1')}; 
+  color: ${({ selected }) => (selected ? '#4D4D4D' : '#AEAEAE')}; 
 
-  &:focus {
-    outline: none;
-  }
-
-  &:active {
-    background-color: #ccc; // 클릭 시 색상 피드백
-  }
+font-family: Pretendard;
+font-size: 1rem;
+font-style: normal;
+font-weight: 700;
+line-height: 150%; /* 1.5rem */
+letter-spacing: -0.011rem;
 `;
 
 const HandicapSelection = ({ onSelectionChange, selectedHandicaps }) => {
-
   const [selections, setSelections] = useState(selectedHandicaps);
 
   const toggleHandicap = (key) => {
@@ -136,22 +120,31 @@ const HandicapSelection = ({ onSelectionChange, selectedHandicaps }) => {
           <HandicapIcon src={infantIcon} alt="유아동반자/임산부 아이콘" iconWidth="2.66213rem" iconHeight="5.875rem" />
           <HandicapText>유아동반자/임산부</HandicapText>
         </HandicapButton>
-      </ButtonContainer>
 
-      {/* 해당사항 없음 버튼 */}
-      <NoOptionButton
-        selected={selections.noOption}
-        onClick={() => toggleHandicap('noOption')}
-      >
-        해당사항 없음
-      </NoOptionButton>
+        {/* 청각장애인 버튼 */}
+        <HandicapButton
+          selected={selections.deafHandicap}
+          onClick={() => toggleHandicap('deafHandicap')}
+        >
+          <HandicapIcon src={deafIcon} alt="청각장애인 아이콘" iconWidth="4.5rem" iconHeight="5.5rem" />
+          <HandicapText>청각장애인</HandicapText>
+        </HandicapButton>
+
+        {/* 해당사항 없음 버튼 */}
+        <NoOptionButton
+          selected={selections.noOption}
+          onClick={() => toggleHandicap('noOption')}
+        >
+          해당사항 없음
+        </NoOptionButton>
+      </ButtonContainer>
     </>
   );
 };
 
 HandicapSelection.propTypes = {
-  onSelectionChange: PropTypes.func.isRequired, // 상태 변경 시 호출될 콜백
-  selectedHandicaps: PropTypes.object.isRequired, // 선택된 상태를 넘겨받음
+  onSelectionChange: PropTypes.func.isRequired,
+  selectedHandicaps: PropTypes.object.isRequired,
 };
 
 export default HandicapSelection;
