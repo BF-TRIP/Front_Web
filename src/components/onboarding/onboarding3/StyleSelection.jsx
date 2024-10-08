@@ -11,7 +11,7 @@ const ButtonContainer = styled.div`
   flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 2rem;
-  margin-left: 0.2rem;
+  margin-left: 0.3rem;
 `;
 
 const StyleButton = styled.button`

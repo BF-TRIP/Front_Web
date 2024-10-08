@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect, useContext } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
 import Header from './Header'; 
 import NameInputSection from './onboarding1/NameInputSection'; 
 import GenderSelectionSection from './onboarding1/GenderSelectionSection';
 import BirthdaySection from './onboarding1/BirthdaySection'; 
 import NextButton from './NextButton'; 
+import { OnboardingContext } from '../../utils/OnboardingContext'; 
 
 const Container = styled.div`
   width: 100%;
@@ -23,11 +24,12 @@ const InfoContainer = styled.div`
 `;
 
 const OnboardingFirstStep = ({ onBack }) => {
-  const [name, setName] = useState(''); 
-  const [gender, setGender] = useState(''); 
-  const [year, setYear] = useState(''); 
-  const [month, setMonth] = useState(''); 
-  const [day, setDay] = useState(''); 
+  const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
+  const [userName, setUserName] = useState(onboardingData.userName || ''); 
+  const [gender, setGender] = useState(onboardingData.gender || ''); 
+  const [year, setYear] = useState(onboardingData.year || ''); 
+  const [month, setMonth] = useState(onboardingData.month || ''); 
+  const [day, setDay] = useState(onboardingData.day || ''); 
   const [progress, setProgress] = useState(0); 
 
   const navigate = useNavigate(); 
@@ -42,7 +44,7 @@ const OnboardingFirstStep = ({ onBack }) => {
   }, []);
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    setUserName(e.target.value); 
   };
 
   const handleGenderSelect = (selectedGender) => {
@@ -60,8 +62,15 @@ const OnboardingFirstStep = ({ onBack }) => {
   const handleDayChange = (e) => {
     setDay(e.target.value);
   };
-
+  
   const handleNext = () => {
+    // 현재 상태를 Context에 저장
+    updateOnboardingData('userName', userName);
+    updateOnboardingData('gender', gender);
+    updateOnboardingData('year', year);
+    updateOnboardingData('month', month);
+    updateOnboardingData('day', day);
+  
     // 다음 버튼 클릭 시 33%에서 50%로 부드럽게 증가
     setProgress(50);
     
@@ -70,12 +79,12 @@ const OnboardingFirstStep = ({ onBack }) => {
       navigate('/onboarding-second');
     }, 500);
   };
-
+  
   return (
     <Container>
       <Header onBack={onBack} progress={progress} />
       <InfoContainer> 
-        <NameInputSection value={name} onChange={handleNameChange} />
+        <NameInputSection value={userName} onChange={handleNameChange} /> {/* userName으로 변경 */}
         <GenderSelectionSection selectedGender={gender} onGenderSelect={handleGenderSelect} />
         <BirthdaySection 
           year={year} 

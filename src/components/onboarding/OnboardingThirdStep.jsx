@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState, useContext } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
 import Header from './Header'; 
 import NextButton from './NextButton'; 
 import Title from './onboarding3/Title'; 
 import StyleSelection from './onboarding3/StyleSelection'; 
+import { OnboardingContext } from '../../utils/OnboardingContext'; 
 
 const Container = styled.div`
   width: 100%;
@@ -18,22 +19,25 @@ const InfoContainer = styled.div`
 `;
 
 const OnboardingThirdStep = ({ progress }) => {
+  const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
   const [localProgress, setLocalProgress] = useState(progress); 
-  const [selectedStyles, setSelectedStyles] = useState([]); 
+  const [selectedStyles, setSelectedStyles] = useState(onboardingData.selectedStyles || []); 
 
   const navigate = useNavigate(); 
 
   useEffect(() => {
     // 페이지 로드 시 부드럽게 75%로 설정
     const timeout = setTimeout(() => {
-      setLocalProgress(80);
+      setLocalProgress(75);
     }, 500);
 
     return () => clearTimeout(timeout);
   }, []);
 
   const handleNext = () => {
-    // 다음 버튼 클릭 시 100%로 설정 후 다음 페이지로 이동
+    // 현재 선택된 스타일을 Context에 저장
+    updateOnboardingData('selectedStyles', selectedStyles);
+
     setLocalProgress(100);
     setTimeout(() => {
       console.log("선택된 스타일:", selectedStyles); 
@@ -54,7 +58,7 @@ const OnboardingThirdStep = ({ progress }) => {
       <Header onBack={handleBack} progress={localProgress} showBackButton={true} />
       <InfoContainer>
         <Title /> 
-        <StyleSelection onSelectionChange={handleStyleSelectionChange} /> 
+        <StyleSelection onSelectionChange={handleStyleSelectionChange} selectedStyles={selectedStyles} />
       </InfoContainer>
       <NextButton onClick={handleNext} /> 
     </Container>

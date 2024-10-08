@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import OnboardingFirstStep from '../../components/onboarding/OnboardingFirstStep'; 
 
 const PageContainer = styled.div`
+  position: relative;
   width: 390px;
   height: 844px;
   background-color: #fff;

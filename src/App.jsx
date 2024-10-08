@@ -10,24 +10,30 @@ import Test from './pages/test/test';
 import OnboardingFirstPage from './pages/onboarding/OnboardingFirstPage';
 import OnboardingSecondPage from './pages/onboarding/OnboardingSecondPage';
 import OnboardingThirdPage from './pages/onboarding/OnboardingThirdPage';
+import OnboardingFinalPage from './pages/onboarding/OnboardingFinalPage';
+
+import { OnboardingProvider } from './utils/OnboardingContext';
 
 function App() {
   return (
-    <Router>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/course" element={<Course />} />
-        <Route path="/recommended-list" element={<RecommendedList />} />
-        <Route path="/detail" element={<Detail />} /> 
-        <Route path="/save-list" element={<Savelist />} /> 
-        <Route path="/add-list" element={<Addlist />} /> 
-        <Route path="/test" element={<Test />} /> 
-        <Route path="/onboarding-first" element={<OnboardingFirstPage />} />
-        <Route path="/onboarding-second" element={<OnboardingSecondPage />} />
-        <Route path="/onboarding-third" element={<OnboardingThirdPage />} />
-      </Routes>
-    </Router>
+    <OnboardingProvider>
+      <Router>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/course" element={<Course />} />
+          <Route path="/recommended-list" element={<RecommendedList />} />
+          <Route path="/detail" element={<Detail />} /> 
+          <Route path="/save-list" element={<Savelist />} /> 
+          <Route path="/add-list" element={<Addlist />} /> 
+          <Route path="/test" element={<Test />} /> 
+          <Route path="/onboarding-first" element={<OnboardingFirstPage />} />
+          <Route path="/onboarding-second" element={<OnboardingSecondPage />} />
+          <Route path="/onboarding-third" element={<OnboardingThirdPage />} />
+          <Route path="/onboarding-final" element={<OnboardingFinalPage />} />
+        </Routes>
+      </Router>
+    </OnboardingProvider>
   );
 }
 

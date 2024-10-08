@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import OnboardingSecondStep from '../../components/onboarding/OnboardingSecondStep'; 
 
 const PageContainer = styled.div`
+  position: relative;
   width: 390px;
   height: 844px;
   background-color: #fff;
