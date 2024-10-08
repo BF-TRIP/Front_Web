@@ -10,6 +10,7 @@ import Test from './pages/test/test';
 import OnboardingFirstPage from './pages/onboarding/OnboardingFirstPage';
 import OnboardingSecondPage from './pages/onboarding/OnboardingSecondPage';
 import OnboardingThirdPage from './pages/onboarding/OnboardingThirdPage';
+import OnboardingFinalPage from './pages/onboarding/OnboardingFinalPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/onboarding-first" element={<OnboardingFirstPage />} />
         <Route path="/onboarding-second" element={<OnboardingSecondPage />} />
         <Route path="/onboarding-third" element={<OnboardingThirdPage />} />
+        <Route path="/onboarding-final" element={<OnboardingFinalPage />} />
       </Routes>
     </Router>
   );
