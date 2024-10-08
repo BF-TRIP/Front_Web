@@ -68,14 +68,14 @@ const GenderSelectionSection = ({ selectedGender, onGenderSelect }) => {
       <Title>성별을 알려주세요!</Title>
       <GenderContainer>
         <GenderButton 
-          selected={selectedGender === '남자'} 
-          onClick={() => onGenderSelect('남자')}
+          selected={selectedGender === 'man'}  
+          onClick={() => onGenderSelect('man')}  
         >
           남자
         </GenderButton>
         <GenderButton 
-          selected={selectedGender === '여자'} 
-          onClick={() => onGenderSelect('여자')}
+          selected={selectedGender === 'woman'}  
+          onClick={() => onGenderSelect('woman')}  
         >
           여자
         </GenderButton>
