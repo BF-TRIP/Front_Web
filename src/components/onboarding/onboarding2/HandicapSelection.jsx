@@ -37,7 +37,7 @@ const HandicapButton = styled.button`
 const HandicapIcon = styled.img`
   position: absolute;
   bottom: 0.4rem;
-  right: 1rem;
+  right: 0.6rem;
   width: ${({ iconWidth }) => iconWidth};
   height: ${({ iconHeight }) => iconHeight};
   flex-shrink: 0;
@@ -62,12 +62,12 @@ const NoOptionButton = styled(HandicapButton)`
   background: ${({ selected }) => (selected ? '#D3D3D3' : '#F1F1F1')}; 
   color: ${({ selected }) => (selected ? '#4D4D4D' : '#AEAEAE')}; 
 
-font-family: Pretendard;
-font-size: 1rem;
-font-style: normal;
-font-weight: 700;
-line-height: 150%; /* 1.5rem */
-letter-spacing: -0.011rem;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 1.5rem */
+  letter-spacing: -0.011rem;
 `;
 
 const HandicapSelection = ({ onSelectionChange, selectedHandicaps }) => {
@@ -126,7 +126,7 @@ const HandicapSelection = ({ onSelectionChange, selectedHandicaps }) => {
           selected={selections.deafHandicap}
           onClick={() => toggleHandicap('deafHandicap')}
         >
-          <HandicapIcon src={deafIcon} alt="청각장애인 아이콘" iconWidth="4.5rem" iconHeight="5.5rem" />
+          <HandicapIcon src={deafIcon} alt="청각장애인 아이콘" iconWidth="3.625rem" iconHeight="4.36556rem" />
           <HandicapText>청각장애인</HandicapText>
         </HandicapButton>
 
