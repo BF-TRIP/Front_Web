@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import { useContext } from 'react'; 
 import { OnboardingContext } from '../../utils/OnboardingContext'; 
+import sendOnboardingData from '../../api/onboarding/sendOnboardingData';  
 import TextSection from './onboarding4/TextSection'; 
 import ConfirmButton from './onboarding4/ConfirmButton';
 import onboardingImage from '../../assets/images/onboarding.png'; 
@@ -54,10 +55,18 @@ const OnboardingFinalStep = ({ onConfirm }) => {
         };
       };
   
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       const requestData = formatRequestData();
       console.log("최종 온보딩 데이터:", requestData);
-      onConfirm();
+
+      try {
+        // API 호출
+        const response = await sendOnboardingData(requestData);
+        console.log('응답 데이터:', response); 
+        onConfirm(); 
+      } catch (error) {
+        console.error('온보딩 데이터 전송 실패:', error);
+      }
     };
   
     return (
