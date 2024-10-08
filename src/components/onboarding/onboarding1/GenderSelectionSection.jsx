@@ -39,18 +39,31 @@ const GenderButton = styled.button`
   height: 3.375rem;
   padding: 0.875rem 3.4375rem;
   border-radius: 0.625rem;
-  border: 1px solid ${({ selected }) => (selected ? '#FFE54A' : '#F1F1F1')}; 
+  border: ${({ selected }) => (selected ? '1px solid #FFE54A' : '1px solid transparent')}; 
   background: ${({ selected }) => (selected ? '#FFFCE7' : '#F1F1F1')};
   box-shadow: 0px 4px 12.1px 0px rgba(0, 0, 0, 0.06);
   font-size: 1rem;
   font-family: Inter, sans-serif;
   cursor: pointer;
   outline: none;
-  
+
   &:focus {
     outline: none;
+    border: ${({ selected }) => (selected ? '1px solid #FFE54A' : '1px solid #F1F1F1')}; /* 포커스 상태에서도 원하는 border 유지 */
   }
+
+  &:hover {
+    outline: none;
+    border: ${({ selected }) => (selected ? '1px solid #FFE54A' : '1px solid #F1F1F1')}; /* hover 시에도 동일한 border */
+  }
+
+  color: #ABABAB;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
+
 
 const GenderSelectionSection = ({ selectedGender, onGenderSelect }) => {
   return (
