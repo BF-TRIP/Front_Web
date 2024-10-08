@@ -11,6 +11,11 @@ const Container = styled.div`
   background-color: #fff;
 `;
 
+const InfoContainer = styled.div`
+  padding: 1rem;
+`;
+
+
 const OnboardingFirstStep = ({ onBack, progress }) => {
   const [name, setName] = useState(''); // 이름 입력 상태 관리
   const [gender, setGender] = useState(''); // 성별 선택 상태 관리
@@ -25,9 +30,11 @@ const OnboardingFirstStep = ({ onBack, progress }) => {
 
   return (
     <Container>
-      <Header onBack={onBack} progress={progress} />
-      <NameInputSection value={name} onChange={handleNameChange} />
-      <GenderSelectionSection selectedGender={gender} onGenderSelect={handleGenderSelect} />
+    <Header onBack={onBack} progress={progress} />
+        <InfoContainer> 
+            <NameInputSection value={name} onChange={handleNameChange} />
+            <GenderSelectionSection selectedGender={gender} onGenderSelect={handleGenderSelect} />
+        </InfoContainer>
     </Container>
   );
 };
