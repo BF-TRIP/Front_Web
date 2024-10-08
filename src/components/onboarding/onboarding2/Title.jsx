@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const TitleContainer = styled.div`
   text-align: left;
   margin-top: 3.31rem;
-  margin-left: 0.2rem;
+  margin-left: 0.3rem;
 `;
 
 const TitleText = styled.h1`
