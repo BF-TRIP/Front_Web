@@ -20,7 +20,8 @@ function App() {
       <Router>
         <GlobalStyle />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<OnboardingFirstPage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/course" element={<Course />} />
           <Route path="/recommended-list" element={<RecommendedList />} />
           <Route path="/detail" element={<Detail />} /> 

@@ -6,6 +6,7 @@ import sendOnboardingData from '../../api/onboarding/sendOnboardingData';
 import TextSection from './onboarding4/TextSection'; 
 import ConfirmButton from './onboarding4/ConfirmButton';
 import onboardingImage from '../../assets/images/onboarding.png'; 
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -25,6 +26,7 @@ const Image = styled.img`
 
 const OnboardingFinalStep = ({ onConfirm }) => {
     const { onboardingData } = useContext(OnboardingContext);
+    const navigate = useNavigate();
   
     const calculateAge = (year) => {
       const currentYear = new Date().getFullYear();
@@ -55,20 +57,22 @@ const OnboardingFinalStep = ({ onConfirm }) => {
         };
       };
   
-    const handleSubmit = async () => {
-      const requestData = formatRequestData();
-      console.log("최종 온보딩 데이터:", requestData);
+      const handleSubmit = async () => {
+        const requestData = formatRequestData();
+        console.log("최종 온보딩 데이터:", requestData);
+    
+        try {
+          const response = await sendOnboardingData(requestData);
+          console.log('응답 데이터:', response);
+    
+          navigate('/home', { state: { userName: response.userName } });
+    
+          onConfirm();
+        } catch (error) {
+          console.error('온보딩 데이터 전송 실패:', error);
+        }
+      };
 
-      try {
-        // API 호출
-        const response = await sendOnboardingData(requestData);
-        console.log('응답 데이터:', response); 
-        onConfirm(); 
-      } catch (error) {
-        console.error('온보딩 데이터 전송 실패:', error);
-      }
-    };
-  
     return (
       <Container>
         <TextSection />
@@ -82,7 +86,6 @@ OnboardingFinalStep.propTypes = {
   onConfirm: PropTypes.func.isRequired, 
 };
 
-// 기본값 설정
 OnboardingFinalStep.defaultProps = {
   onConfirm: () => {},
 };

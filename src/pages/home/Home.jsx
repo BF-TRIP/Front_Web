@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
@@ -82,6 +82,9 @@ const NearbySectionContainer = styled.div`
 `;
 
 const Home = () => {
+  const { state } = useLocation(); 
+  const userName = state?.userName || '사용자'; // 유저 이름이 없으면 기본값으로 '사용자' 사용
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -116,7 +119,7 @@ const Home = () => {
       </HeaderBackground>
       <RoundedBackground />
       <RecommendedSectionContainer>
-        <RecommendedSection />
+        <RecommendedSection userName={userName} /> {/* 유저 이름을 RecommendedSection에 전달 */}
       </RecommendedSectionContainer>
       <NearbySectionContainer>
         <NearbyTourSection />
