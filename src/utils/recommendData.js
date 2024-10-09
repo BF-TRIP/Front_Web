@@ -1,11 +1,12 @@
-import BusanImage from '../assets/images/Busan.png'; 
+import HistoryImage from '../assets/images/recommend1.png'; 
+import HandicapImage from '../assets/images/recommend2.png';
 import BusanImage2 from '../assets/images/chang.png'; 
 
 const tourData = [
   {
-    image: BusanImage,
+    image: HistoryImage,
     image2: BusanImage2,  
-    title: '부산 2박 3일 코스',
+    title: '역사•문화유산 관광지',
     subtitle: '부산광역시',
     accessibility: {
       wheelchair: true,
@@ -16,28 +17,15 @@ const tourData = [
     },
   },
   {
-    image: BusanImage,
+    image: HandicapImage,
     image2: BusanImage2,  
-    title: '제주 3박 4일 코스',
+    title: '장애인 전용 주차가능 관광지 리스트',
     subtitle: '제주특별자치도',
     accessibility: {
       wheelchair: true,
       family: true,
       stroller: true,
       visual: true,
-      hearing: true,
-    },
-  },
-  {
-    image: BusanImage,
-    image2: BusanImage2, 
-    title: '서울 1박 2일 코스',
-    subtitle: '서울특별시',
-    accessibility: {
-      wheelchair: true,
-      family: true,
-      stroller: true,
-      visual: false,
       hearing: true,
     },
   },
