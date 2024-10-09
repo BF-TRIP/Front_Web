@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header1 from '../../components/common/Header';
 import Header2 from '../../components/savelist/tourlist/Header';
 import TourCard from '../../components/savelist/tourlist/TourCard';
 import AddMoreSection from '../../components/savelist/tourlist/AddMoreSection';
+import getCourseTourList from '../../api/save/getCourseTourList';
 
 const PageContainer = styled.div`
   position: relative;
@@ -20,22 +23,48 @@ const PageContainer = styled.div`
 `;
 
 const TourListPage = () => {
+  const location = useLocation();
+  const { courseNumber } = location.state; 
+
+  const [tourList, setTourList] = useState([]);
+  const [courseName, setCourseName] = useState(''); 
+  const [description, setDescription] = useState(''); 
+
+  useEffect(() => {
+    const fetchTourList = async () => {
+      try {
+        const data = await getCourseTourList(courseNumber); 
+        setTourList(data.locationInfoResList); 
+        setCourseName(data.courseName); 
+        setDescription(data.description);
+      } catch (error) {
+        console.error('코스 관광지 데이터를 불러오는 중 에러 발생:', error);
+      }
+    };
+
+    if (courseNumber) {
+      fetchTourList();
+    }
+  }, [courseNumber]);
+
   return (
     <PageContainer>
       <Header1 />
-      <Header2 title="부산 2박 3일 리스트" description="리스트 세부 설명 적는 칸" />
+      <Header2 title={courseName} description={description} />
       
-      {/* 더미 데이터 */}
-      <TourCard 
-        imageUrl="https://example.com/image1.jpg"
-        title="해운대 해수욕장"
-        address="부산 해운대구 우동"
-      />
-      <TourCard 
-        imageUrl="https://example.com/image2.jpg"
-        title="동백섬"
-        address="부산 해운대구 해운대로 612"
-      />
+      {tourList.map((tour, index) => (
+        <TourCard 
+          key={index}
+          imageUrl={tour.thumbnailImage} 
+          title={tour.contentTitle}
+          address={tour.addr}
+          publicTransport={tour.publicTransport}
+          wheelchair={tour.wheelchair}
+          stroller={tour.stroller}
+          braileBlock={tour.braileBlock}
+          hearingHandicapEtc={tour.hearingHandicapEtc}
+        />
+      ))}
       
       <AddMoreSection />
     </PageContainer>

@@ -1,11 +1,11 @@
-// AddToList.js
+import { useNavigate } from 'react-router-dom'; 
 import styled from 'styled-components';
 import AddToListHeader from './addlist/AddToListHeader'; 
 import SavedTourList from '../savelist/SavedTourList'; 
 import AddToListFooter from './addlist/AddToListFooter';
 import { useEffect, useState } from 'react';
 import getSavedTours from '../../api/save/getSavedTours';
-import addCourseItems from '../../api/save/addCourseItems';  // API 호출 함수 추가
+import addCourseItems from '../../api/save/addCourseItems';  
 import PropTypes from 'prop-types'; 
 
 const Container = styled.div`
@@ -21,11 +21,11 @@ const Container = styled.div`
   scrollbar-width: none;
 `;
 
-const AddToList = ({ userNumber, courseNumber, listName, onBack }) => { // courseNumber 추가
+const AddToList = ({ userNumber, courseNumber, listName, onBack }) => {
   const [savedTourData, setSavedTourData] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);  // 선택된 아이템 관리
+  const [selectedItems, setSelectedItems] = useState([]);
+  const navigate = useNavigate(); 
 
-  // 저장한 관광지 데이터를 불러오는 함수
   const fetchSavedTourData = async () => {
     try {
       const data = await getSavedTours(userNumber);
@@ -33,7 +33,7 @@ const AddToList = ({ userNumber, courseNumber, listName, onBack }) => { // cours
         ...tour,
         thumbnailImage: tour.thumbnail_image,
         contentTitle: tour.content_title,
-        contentId: tour.content_id,  // contentId 추가
+        contentId: tour.content_id,  
       }));
       setSavedTourData(transformedData);
     } catch (error) {
@@ -57,12 +57,14 @@ const AddToList = ({ userNumber, courseNumber, listName, onBack }) => { // cours
 
   const handleAddToList = async () => {
     try {
-      await addCourseItems(courseNumber, selectedItems);  
+      await addCourseItems(courseNumber, selectedItems); 
       alert('선택한 관광지가 코스에 추가되었습니다.');
+      navigate('/tour-list', { state: { courseNumber } }); 
     } catch (error) {
       console.error('관광지 추가 중 오류 발생:', error);
     }
   };
+  
 
   return (
     <Container>
@@ -78,10 +80,9 @@ const AddToList = ({ userNumber, courseNumber, listName, onBack }) => { // cours
   );
 };
 
-// PropTypes 설정
 AddToList.propTypes = {
   userNumber: PropTypes.string.isRequired,
-  courseNumber: PropTypes.string.isRequired,  // courseNumber 추가
+  courseNumber: PropTypes.string.isRequired,  
   listName: PropTypes.string.isRequired,
   onBack: PropTypes.func.isRequired,
 };

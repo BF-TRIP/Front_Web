@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const AddSectionContainer = styled.div`
-  width: 20.75rem;
+  width: 21.75rem;
   height: 14.625rem;
   flex-shrink: 0;
   display: flex;
