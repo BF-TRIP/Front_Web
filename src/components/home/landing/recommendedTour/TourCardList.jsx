@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TourCard from './TourCard';
-import tourData from '../../../../utils/recommendData';
 
 const CardListContainer = styled.div`
   display: flex;
@@ -13,11 +12,15 @@ const CardListContainer = styled.div`
   }
 `;
 
-const TourCardList = () => {
+const TourCardList = ({ tourData }) => {
   return (
     <CardListContainer>
       {tourData.map((tour, index) => (
-        <TourCard key={index} image={tour.image} title={tour.title} />
+        <TourCard 
+          key={index} 
+          image={tour.thumbnailImage} 
+          title={tour.contentTitle}
+        />
       ))}
     </CardListContainer>
   );
@@ -26,10 +29,10 @@ const TourCardList = () => {
 TourCardList.propTypes = {
   tourData: PropTypes.arrayOf(
     PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      contentTitle: PropTypes.string.isRequired,  
+      thumbnailImage: PropTypes.string.isRequired,  
     })
-  ),
+  ).isRequired,
 };
 
 export default TourCardList;

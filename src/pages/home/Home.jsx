@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
@@ -6,6 +6,7 @@ import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRec
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
 import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
 import VoiceRecognitionModal from '../../components/home/landing/voice/VoiceRecognitionModal'; 
+import getRecommendedLocations from '../../api/home/recommend';  
 
 const HomeContainer = styled.div`
   width: 390px; 
@@ -83,17 +84,32 @@ const NearbySectionContainer = styled.div`
 
 const Home = () => {
   const { state } = useLocation(); 
+  const userNumber = state?.userNumber || null; // userNumber를 받아옴
   const userName = state?.userName || '사용자'; // 유저 이름이 없으면 기본값으로 '사용자' 사용
-
+  const [recommendedLocations, setRecommendedLocations] = useState([]); 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  console.log('userNumber:', userNumber); 
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  // 추천 관광지 데이터 가져오기
+  const fetchRecommendedLocations = useCallback(async () => {
+    if (userNumber) {
+      try {
+        const data = await getRecommendedLocations(userNumber);
+        setRecommendedLocations(data);
+      } catch (error) {
+        console.error('추천 관광지 데이터를 불러오는 중 오류 발생:', error);
+      }
+    }
+  }, [userNumber]); // userNumber가 변경될 때마다 함수가 재생성됨
+
+  // 컴포넌트가 마운트되었을 때 추천 관광지 데이터를 가져옴
+  useEffect(() => {
+    fetchRecommendedLocations();
+  }, [fetchRecommendedLocations]); 
 
   // JavaScript와 iOS 간 통신 함수
   const javaScriptToIOS = () => {
@@ -119,7 +135,7 @@ const Home = () => {
       </HeaderBackground>
       <RoundedBackground />
       <RecommendedSectionContainer>
-        <RecommendedSection userName={userName} /> {/* 유저 이름을 RecommendedSection에 전달 */}
+        <RecommendedSection recommendedLocations={recommendedLocations} userName={userName} /> 
       </RecommendedSectionContainer>
       <NearbySectionContainer>
         <NearbyTourSection />
