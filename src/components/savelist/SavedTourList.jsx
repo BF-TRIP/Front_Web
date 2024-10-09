@@ -22,7 +22,7 @@ const SavedTourListContainer = styled.div`
   gap: 0.88rem;
 `;
 
-const SavedTourList = ({ savedTourData }) => {
+const SavedTourList = ({ savedTourData, showCheckbox }) => { 
   return (
     <Container>
       <Title>저장한 관광지</Title>
@@ -31,7 +31,8 @@ const SavedTourList = ({ savedTourData }) => {
           <SavedTourItem 
             key={index} 
             image={tour.thumbnailImage} 
-            title={tour.contentTitle}    
+            title={tour.contentTitle} 
+            showCheckbox={showCheckbox}  
           />
         ))}
       </SavedTourListContainer>
@@ -41,6 +42,11 @@ const SavedTourList = ({ savedTourData }) => {
 
 SavedTourList.propTypes = {
   savedTourData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  showCheckbox: PropTypes.bool,
+};
+
+SavedTourList.defaultProps = {
+  showCheckbox: false, 
 };
 
 export default SavedTourList;
