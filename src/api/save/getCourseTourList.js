@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BASE_URL from '../config';  // BASE_URL은 환경 설정에서 가져옵니다.
+import BASE_URL from '../config';  
 
 const getCourseTourList = async (courseNumber) => {
   try {
