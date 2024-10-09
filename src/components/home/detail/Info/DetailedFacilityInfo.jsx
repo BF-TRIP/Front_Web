@@ -23,6 +23,7 @@ const InfoTitle = styled.div`
 `;
 
 const InfoDescription = styled.div`
+width: 80%;
   color: #000;
   font-weight: 400;
 `;
