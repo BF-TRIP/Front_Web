@@ -1,12 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
 import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
-import getRecommendedLocations from '../../api/home/recommend';  
-import messageImage from '../../assets/images/message.png'; // 말풍선 이미지 추가
+import messageImage from '../../assets/images/message.png';
 
 const HomeContainer = styled.div`
   width: 390px; 
@@ -95,25 +94,7 @@ const Home = () => {
   const { state } = useLocation(); 
   const userNumber = state?.userNumber || null; 
   const userName = state?.userName || '사용자'; 
-  const [recommendedLocations, setRecommendedLocations] = useState([]);
-
   console.log('userNumber:', userNumber); 
-
-  // 추천 관광지 데이터 가져오기
-  const fetchRecommendedLocations = useCallback(async () => {
-    if (userNumber) {
-      try {
-        const data = await getRecommendedLocations(userNumber);
-        setRecommendedLocations(data);
-      } catch (error) {
-        console.error('추천 관광지 데이터를 불러오는 중 오류 발생:', error);
-      }
-    }
-  }, [userNumber]);
-
-  useEffect(() => {
-    fetchRecommendedLocations();
-  }, [fetchRecommendedLocations]);
 
   const javaScriptToIOS = () => {
     if (window.webkit?.messageHandlers?.serverEvent) {
@@ -137,7 +118,7 @@ const Home = () => {
       </HeaderBackground>
       <RoundedBackground />
       <RecommendedSectionContainer>
-        <RecommendedSection recommendedLocations={recommendedLocations} userName={userName} />
+        <RecommendedSection userName={userName} />
       </RecommendedSectionContainer>
       <NearbySectionContainer>
         <NearbyTourSection />

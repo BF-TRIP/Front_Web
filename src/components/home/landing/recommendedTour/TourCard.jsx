@@ -28,19 +28,20 @@ const CardTitle = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  width: 80%;
 `;
 
 const TourCard = ({ image, title }) => {
   const navigate = useNavigate(); 
 
   const handleCardClick = () => {
-    navigate('/recommended-list');  
+    navigate('/recommended-list');
   };
 
   return (
     <CardContainer onClick={handleCardClick}> 
-      <CardImage src={image} alt={title} /> 
-      <CardTitle>{title}</CardTitle> 
+      <CardImage src={image} alt={title} />
+      <CardTitle>{title}</CardTitle>
     </CardContainer>
   );
 };
