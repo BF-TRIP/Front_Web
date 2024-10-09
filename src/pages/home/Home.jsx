@@ -5,7 +5,6 @@ import Header from '../../components/header/Header';
 import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRecognitionButton';
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
 import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
-import VoiceRecognitionModal from '../../components/home/landing/voice/VoiceRecognitionModal'; 
 import getRecommendedLocations from '../../api/home/recommend';  
 import messageImage from '../../assets/images/message.png'; // 말풍선 이미지 추가
 
@@ -94,15 +93,11 @@ const NearbySectionContainer = styled.div`
 
 const Home = () => {
   const { state } = useLocation(); 
-  const userNumber = state?.userNumber || null; // userNumber를 받아옴
-  const userName = state?.userName || '사용자'; // 유저 이름이 없으면 기본값으로 '사용자' 사용
-  const [recommendedLocations, setRecommendedLocations] = useState([]); 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const userNumber = state?.userNumber || null; 
+  const userName = state?.userName || '사용자'; 
+  const [recommendedLocations, setRecommendedLocations] = useState([]);
 
   console.log('userNumber:', userNumber); 
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   // 추천 관광지 데이터 가져오기
   const fetchRecommendedLocations = useCallback(async () => {
@@ -116,12 +111,10 @@ const Home = () => {
     }
   }, [userNumber]);
 
-  // 컴포넌트가 마운트되었을 때 추천 관광지 데이터를 가져옴
   useEffect(() => {
     fetchRecommendedLocations();
   }, [fetchRecommendedLocations]);
 
-  // JavaScript와 iOS 간 통신 함수
   const javaScriptToIOS = () => {
     if (window.webkit?.messageHandlers?.serverEvent) {
       console.log('Send Event');
@@ -131,7 +124,6 @@ const Home = () => {
     }
   };
 
-  // iOS에서 자바스크립트로 이벤트 발생 함수
   useEffect(() => {
     window.iOSToJavaScript = function() {
       console.log('Event Occurred');
@@ -154,15 +146,12 @@ const Home = () => {
         <VoiceRecognitionButtonWrapper>
           <VoiceRecognitionButton
             onClick={() => {
-              openModal();
               javaScriptToIOS();
             }}
           />
         </VoiceRecognitionButtonWrapper>
       </VoiceRecognitionButtonBackground>
-      {/* 말풍선 이미지 렌더링 */}
       <MessageBubble src={messageImage} alt="음성으로 검색할 수 있어요!" />
-      <VoiceRecognitionModal isOpen={isModalOpen} onClose={closeModal} />
     </HomeContainer>
   );
 };
