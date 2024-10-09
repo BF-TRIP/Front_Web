@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState } from 'react'; 
+import saveIcon from '../../../assets/images/save.svg'; 
+import savedIcon from '../../../assets/images/save2.svg';
+import saveCourse from '../../../api/save/saveCourse'; 
+
 import WheelchairIcon from '../../../assets/images/senior.png';
 import FamilyIcon from '../../../assets/images/wheelchair.png';
 import StrollerIcon from '../../../assets/images/infant.png';
@@ -13,6 +18,7 @@ const CardContainer = styled.div`
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
   margin-bottom: 1rem;
   overflow: hidden;
+  position: relative;
 `;
 
 const CardImage = styled.div`
@@ -66,6 +72,26 @@ const Icon = styled.img`
   opacity: ${(props) => (props.isActive ? '1' : '0.3')};
 `;
 
+const ScrapButton = styled.button`
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const ScrapIcon = styled.img`
+  width: 2rem;
+  height: 2rem;
+`;
+
 const RecommendedTourCard = ({
   imageUrl,
   title,
@@ -75,9 +101,32 @@ const RecommendedTourCard = ({
   stroller,
   braileBlock,
   hearingHandicapEtc,
+  contentId 
 }) => {
+  const [isScraped, setIsScraped] = useState(false);
+  const userNumber = localStorage.getItem('userNumber');
+
+  const toggleScrap = async (e) => {
+    e.stopPropagation();
+    setIsScraped(!isScraped);
+
+    if (!isScraped && userNumber) {
+      try {
+        const response = await saveCourse(userNumber, contentId); 
+        console.log('저장 성공:', response);
+      } catch (error) {
+        console.error('저장 실패:', error);
+      }
+    } else {
+      console.log('이미 저장되었거나 userNumber가 없습니다.');
+    }
+  };
+
   return (
     <CardContainer>
+      <ScrapButton onClick={toggleScrap}>
+        <ScrapIcon src={isScraped ? savedIcon : saveIcon} alt="스크랩 아이콘" />
+      </ScrapButton>
       <CardImage imageUrl={imageUrl}>
         <PlaceholderIcon src="src/assets/images/image.png" alt="Placeholder Icon" imageUrl={imageUrl} />
       </CardImage>
@@ -106,7 +155,6 @@ const RecommendedTourCard = ({
           alt="Stroller Accessible" 
           isActive={!!stroller} 
         />
-
         <Icon 
           src={HearingIcon} 
           alt="Hearing Aid Accessible" 
@@ -126,6 +174,7 @@ RecommendedTourCard.propTypes = {
   stroller: PropTypes.string,
   braileBlock: PropTypes.string,
   hearingHandicapEtc: PropTypes.string,
+  contentId: PropTypes.number.isRequired 
 };
 
 export default RecommendedTourCard;

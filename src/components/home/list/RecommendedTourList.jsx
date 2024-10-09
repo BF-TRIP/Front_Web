@@ -57,6 +57,7 @@ const RecommendedTourList = () => {
       {tourData.map((tour, index) => (
         <CardWrapper key={index}>
           <RecommendedTourCard
+            contentId={tour.contentId}  
             imageUrl={tour.thumbnailImage || ''}
             title={tour.contentTitle}
             address={tour.addr}
