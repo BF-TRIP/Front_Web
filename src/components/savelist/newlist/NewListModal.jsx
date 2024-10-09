@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import closeIcon from '../../../assets/images/close.svg';
-import createCourse from '../../../api/save/createCourse'; 
+import createCourse from '../../../api/save/createCourse'; // API 함수 import
 
 const ModalOverlay = styled.div`
   position: absolute;
@@ -104,6 +105,8 @@ const ConfirmButton = styled.button`
 
 const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
   const [courseName, setCourseName] = useState('');
+  const [courseDescription, setCourseDescription] = useState(''); 
+  const navigate = useNavigate(); // useNavigate 사용
 
   useEffect(() => {
     console.log('NewListModal에서 전달받은 userNumber:', userNumber);
@@ -111,10 +114,11 @@ const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
 
   const handleCreateCourse = async () => {
     try {
-      console.log('코스 생성 요청: userNumber:', userNumber, '코스명:', courseName);
-      await createCourse(userNumber, courseName); // userNumber와 courseName을 API에 전달
+      console.log('코스 생성 요청: userNumber:', userNumber, '코스명:', courseName, '설명:', courseDescription);
+      await createCourse(userNumber, courseName, courseDescription); 
       console.log('코스가 생성되었습니다!');
-      onConfirm(); // 성공적으로 생성된 후 모달 닫기
+      onConfirm(); // 모달 닫기
+      navigate('/add-list', { state: { courseName } }); // 생성된 코스 이름과 함께 이동
     } catch (error) {
       console.error('코스 생성 실패:', error);
     }
@@ -131,21 +135,24 @@ const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
         <InputField 
           placeholder="리스트 이름을 입력해주세요" 
           value={courseName}
-          onChange={(e) => setCourseName(e.target.value)} // 입력값 업데이트
+          onChange={(e) => setCourseName(e.target.value)} 
         />
-        <TextAreaField placeholder={`설명을 간단히 작성해보세요\n(예 : 몇월 며칠 누구랑 무슨 여행)`} />
+        <TextAreaField 
+          placeholder={`설명을 간단히 작성해보세요\n(예 : 몇월 며칠 누구랑 무슨 여행)`} 
+          value={courseDescription} 
+          onChange={(e) => setCourseDescription(e.target.value)}
+        />
         <ConfirmButton onClick={handleCreateCourse}>확인</ConfirmButton>
       </ModalContent>
     </>
   );
 };
 
-
 NewListModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  userNumber: PropTypes.string.isRequired, // userNumber 필수
+  userNumber: PropTypes.string.isRequired, 
 };
 
 export default NewListModal;
