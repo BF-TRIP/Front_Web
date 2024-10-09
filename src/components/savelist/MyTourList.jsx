@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import TourListItem from './mytour/TourListItem';
 import CreateNewListButton from './mytour/CreateNewListButton';
 import getUserCourses from '../../api/save/getUserCourses';
+import getCourseTourList from '../../api/save/getCourseTourList'; 
 
 const Container = styled.div`
   padding: 1.15rem;
@@ -39,7 +40,16 @@ const MyTourList = ({ userNumber }) => {
     const fetchUserCourses = async () => {
       try {
         const data = await getUserCourses(userNumber); 
-        setTourData(data);
+        const enrichedCourses = await Promise.all(
+          data.map(async (course) => {
+            const courseDetails = await getCourseTourList(course.courseNumber); 
+            const thumbnailImage = courseDetails.locationInfoResList.length > 0
+              ? courseDetails.locationInfoResList[0].thumbnailImage  
+              : null;  
+            return { ...course, thumbnailImage }; 
+          })
+        );
+        setTourData(enrichedCourses);  
       } catch (error) {
         console.error('코스 데이터를 불러오는 중 에러 발생:', error);
       }
@@ -53,13 +63,13 @@ const MyTourList = ({ userNumber }) => {
   return (
     <>
       <Container>
-        <Title>내가 만든 관광지</Title>
+        <Title>내가 만든 관광지 리스트</Title>
         <TourListContainer>
           {tourData.map((tour, index) => (
             <TourListItem 
               key={index} 
               title={tour.courseName} 
-              image={null} // 코스 이미지가 없으므로 기본 이미지로 설정 가능 (추가 구현 필요)
+              image={tour.thumbnailImage || 'https://via.placeholder.com/300x200?text=%F0%9F%93%B7'}  // 썸네일 이미지 없을 때 기본 이미지
             />
           ))}
           <CreateNewListButton userNumber={userNumber} /> 
