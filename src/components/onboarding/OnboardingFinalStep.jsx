@@ -25,63 +25,74 @@ const Image = styled.img`
 `;
 
 const OnboardingFinalStep = ({ onConfirm }) => {
-    const { onboardingData } = useContext(OnboardingContext);
-    const navigate = useNavigate();
+  const { onboardingData, updateOnboardingData } = useContext(OnboardingContext); // Context 사용
+  const navigate = useNavigate();
   
-    const calculateAge = (year) => {
-      const currentYear = new Date().getFullYear();
-      return currentYear - parseInt(year, 10);
-    };
-  
-    const formatRequestData = () => {
-        const {
-          userName,
-          gender,
-          year,
-          selectedHandicaps,
-          selectedStyles
-        } = onboardingData;
-      
-        const age = calculateAge(year);
-      
-        return {
-          userName: userName,
-          gender: gender,
-          age: age.toString(),
-          senior: selectedHandicaps.senior || false,
-          wheelchair: selectedHandicaps.wheelchair || false,
-          blindHandicap: selectedHandicaps.blindHandicap || false,
-          hearingHandicap: selectedHandicaps.hearingHandicap || false,
-          infantsFamily: selectedHandicaps.infantsFamily || false,
-          travelType: selectedStyles
-        };
-      };
-  
-      const handleSubmit = async () => {
-        const requestData = formatRequestData();
-        console.log("최종 온보딩 데이터:", requestData);
-      
-        try {
-          const response = await sendOnboardingData(requestData);
-          console.log('응답 데이터:', response);
-      
-          navigate('/home', { state: { userName: response.userName, userNumber: response.userNumber } });
-      
-          onConfirm();
-        } catch (error) {
-          console.error('온보딩 데이터 전송 실패:', error);
-        }
-      };
-      
-
-    return (
-      <Container>
-        <TextSection />
-        <ConfirmButton onClick={handleSubmit} /> 
-        <Image src={onboardingImage} alt="온보딩 이미지" /> 
-      </Container>
-    );
+  const calculateAge = (year) => {
+    const currentYear = new Date().getFullYear();
+    return currentYear - parseInt(year, 10);
   };
+
+  const formatRequestData = () => {
+    const {
+      userName,
+      gender,
+      year,
+      selectedHandicaps,
+      selectedStyles
+    } = onboardingData;
+    
+    const age = calculateAge(year);
+    
+    return {
+      userName,
+      gender,
+      age: age.toString(),
+      senior: selectedHandicaps.senior || false,
+      wheelchair: selectedHandicaps.wheelchair || false,
+      blindHandicap: selectedHandicaps.blindHandicap || false,
+      hearingHandicap: selectedHandicaps.hearingHandicap || false,
+      infantsFamily: selectedHandicaps.infantsFamily || false,
+      travelType: selectedStyles,
+    };
+  };
+
+  const handleSubmit = async () => {
+    const requestData = formatRequestData();
+    console.log("최종 온보딩 데이터:", requestData);
+  
+    try {
+      const response = await sendOnboardingData(requestData);
+      console.log('응답 데이터:', response);
+  
+      // userNumber와 userName을 Context에 저장
+      updateOnboardingData('userNumber', response.userNumber);
+      updateOnboardingData('userName', response.userName);
+  
+      console.log('저장된 userNumber:', response.userNumber);
+      console.log('저장된 userName:', response.userName);
+
+      console.log('온보딩 후 저장된 userNumber:', onboardingData.userNumber);
+      console.log('온보딩 후 저장된 userName:', onboardingData.userName);
+  
+      navigate('/home', { state: { userNumber: response.userNumber, userName: response.userName } });
+
+  
+      onConfirm();
+    } catch (error) {
+      console.error('온보딩 데이터 전송 실패:', error);
+    }
+  };
+  
+
+  return (
+    <Container>
+      <TextSection />
+      <ConfirmButton onClick={handleSubmit} /> 
+      <Image src={onboardingImage} alt="온보딩 이미지" /> 
+    </Container>
+  );
+};
 
 OnboardingFinalStep.propTypes = {
   onConfirm: PropTypes.func.isRequired, 
