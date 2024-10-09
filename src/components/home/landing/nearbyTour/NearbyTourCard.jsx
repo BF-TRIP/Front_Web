@@ -76,6 +76,7 @@ const NearbyTourCard = ({ contentTitle, addr, originalImage, description, conten
   const handleCardClick = () => {
     navigate('/detail', { 
       state: { 
+        contentId,  
         images: [originalImage], 
         placeName: contentTitle, 
         description: description, 
@@ -103,7 +104,7 @@ const NearbyTourCard = ({ contentTitle, addr, originalImage, description, conten
       <ScrapButton onClick={toggleScrap}>
         <ScrapIcon src={isScraped ? savedIcon : saveIcon} alt="스크랩 아이콘" />
       </ScrapButton>
-      <CardImage src={originalImage || '/path/to/default/image.jpg'} alt={contentTitle} /> {/* defaultImage 디자인 나오는대로 추가 */}
+      <CardImage src={originalImage || '/path/to/default/image.jpg'} alt={contentTitle} />
       <CardContent>
         <CardTitle>{contentTitle}</CardTitle>  
         <CardSubtitle>{addr}</CardSubtitle> 
