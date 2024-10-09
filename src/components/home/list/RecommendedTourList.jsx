@@ -22,8 +22,8 @@ const Title = styled.h3`
   font-style: normal;
   font-weight: 600;
   margin-left: 0.2rem;
-  margin-top: 1.75rem;
-  margin-bottom: 1.79rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.12rem;
   line-height: 1.375rem;
 `;
 
