@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import TourListItem from './mytour/TourListItem';
 import CreateNewListButton from './mytour/CreateNewListButton';
-import tourData from '../../utils/tourData'; 
+import getUserCourses from '../../api/save/getUserCourses';
 
 const Container = styled.div`
   padding: 1.15rem;
@@ -28,19 +29,40 @@ const Divider = styled.div`
   width: 100%;
   height: 0.38rem;
   flex-shrink: 0;
-  background: #F7F6FB;;
+  background: #F7F6FB;
 `;
 
 const MyTourList = ({ userNumber }) => {
+  const [tourData, setTourData] = useState([]); 
+
+  useEffect(() => {
+    const fetchUserCourses = async () => {
+      try {
+        const data = await getUserCourses(userNumber); 
+        setTourData(data);
+      } catch (error) {
+        console.error('코스 데이터를 불러오는 중 에러 발생:', error);
+      }
+    };
+
+    if (userNumber) {
+      fetchUserCourses(); 
+    }
+  }, [userNumber]);
+
   return (
     <>
       <Container>
         <Title>내가 만든 관광지</Title>
         <TourListContainer>
           {tourData.map((tour, index) => (
-            <TourListItem key={index} image={tour.image} title={tour.title} />
+            <TourListItem 
+              key={index} 
+              title={tour.courseName} 
+              image={null} // 코스 이미지가 없으므로 기본 이미지로 설정 가능 (추가 구현 필요)
+            />
           ))}
-          <CreateNewListButton userNumber={userNumber} /> {/* userNumber 전달 */}
+          <CreateNewListButton userNumber={userNumber} /> 
         </TourListContainer>
       </Container>
       <Divider />
@@ -49,13 +71,7 @@ const MyTourList = ({ userNumber }) => {
 };
 
 MyTourList.propTypes = {
-  userNumber: PropTypes.string.isRequired, // userNumber 필수
-  tourData: PropTypes.arrayOf(
-    PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-    })
-  ),
+  userNumber: PropTypes.string.isRequired,
 };
 
 export default MyTourList;
