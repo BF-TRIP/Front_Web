@@ -31,24 +31,25 @@ const Divider = styled.div`
   background: #F7F6FB;;
 `;
 
-const MyTourList = () => {
+const MyTourList = ({ userNumber }) => {
   return (
-      <>
-    <Container>
-      <Title>내가 만든 관광지</Title>
-      <TourListContainer>
-        {tourData.map((tour, index) => (
-          <TourListItem key={index} image={tour.image} title={tour.title} />
-        ))}
-        <CreateNewListButton /> 
-      </TourListContainer>
-    </Container>
-    <Divider  />
+    <>
+      <Container>
+        <Title>내가 만든 관광지</Title>
+        <TourListContainer>
+          {tourData.map((tour, index) => (
+            <TourListItem key={index} image={tour.image} title={tour.title} />
+          ))}
+          <CreateNewListButton userNumber={userNumber} /> {/* userNumber 전달 */}
+        </TourListContainer>
+      </Container>
+      <Divider />
     </>
   );
 };
 
 MyTourList.propTypes = {
+  userNumber: PropTypes.string.isRequired, // userNumber 필수
   tourData: PropTypes.arrayOf(
     PropTypes.shape({
       image: PropTypes.string.isRequired,

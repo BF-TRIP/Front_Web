@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import closeIcon from '../../../assets/images/close.svg'; // Close 버튼 이미지 경로
+import styled from 'styled-components';
+import closeIcon from '../../../assets/images/close.svg';
+import createCourse from '../../../api/save/createCourse'; 
 
 const ModalOverlay = styled.div`
   position: absolute;
@@ -101,18 +102,23 @@ const ConfirmButton = styled.button`
   }
 `;
 
-const NewListModal = ({ show, onClose, onConfirm }) => {
-  useEffect(() => {
-    if (show) {
-      document.body.style.overflow = 'hidden'; // 스크롤 비활성화
-    } else {
-      document.body.style.overflow = 'auto'; // 스크롤 활성화
-    }
+const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
+  const [courseName, setCourseName] = useState('');
 
-    return () => {
-      document.body.style.overflow = 'auto'; // 컴포넌트 언마운트 시 스크롤 복원
-    };
-  }, [show]);
+  useEffect(() => {
+    console.log('NewListModal에서 전달받은 userNumber:', userNumber);
+  }, [userNumber]);
+
+  const handleCreateCourse = async () => {
+    try {
+      console.log('코스 생성 요청: userNumber:', userNumber, '코스명:', courseName);
+      await createCourse(userNumber, courseName); // userNumber와 courseName을 API에 전달
+      console.log('코스가 생성되었습니다!');
+      onConfirm(); // 성공적으로 생성된 후 모달 닫기
+    } catch (error) {
+      console.error('코스 생성 실패:', error);
+    }
+  };
 
   if (!show) return null;
 
@@ -122,18 +128,24 @@ const NewListModal = ({ show, onClose, onConfirm }) => {
       <ModalContent>
         <CloseButton src={closeIcon} alt="Close" onClick={onClose} />
         <ModalTitle>새 리스트</ModalTitle>
-        <InputField placeholder="리스트 이름을 입력해주세요" />
+        <InputField 
+          placeholder="리스트 이름을 입력해주세요" 
+          value={courseName}
+          onChange={(e) => setCourseName(e.target.value)} // 입력값 업데이트
+        />
         <TextAreaField placeholder={`설명을 간단히 작성해보세요\n(예 : 몇월 며칠 누구랑 무슨 여행)`} />
-        <ConfirmButton onClick={onConfirm}>확인</ConfirmButton>
+        <ConfirmButton onClick={handleCreateCourse}>확인</ConfirmButton>
       </ModalContent>
     </>
   );
 };
 
+
 NewListModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  userNumber: PropTypes.string.isRequired, // userNumber 필수
 };
 
 export default NewListModal;

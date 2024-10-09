@@ -25,7 +25,8 @@ const SaveListContainer = styled.div`
 const Savelist = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [savedTourList, setSavedTourList] = useState([]);
-  
+  const [localUserNumber, setLocalUserNumber] = useState(null); // 로컬 상태로 userNumber 관리
+
   const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
   let { userNumber } = onboardingData;
 
@@ -34,10 +35,13 @@ const Savelist = () => {
       const savedUserNumber = localStorage.getItem('userNumber');
       if (savedUserNumber) {
         userNumber = savedUserNumber;
+        setLocalUserNumber(savedUserNumber); // 로컬 상태 업데이트
         updateOnboardingData('userNumber', savedUserNumber); 
       } else {
         console.warn('userNumber가 존재하지 않습니다. 홈으로 리디렉션 필요.');
       }
+    } else {
+      setLocalUserNumber(userNumber); // Context에서 가져온 userNumber 사용
     }
   }, [userNumber, updateOnboardingData]);
 
@@ -55,23 +59,23 @@ const Savelist = () => {
   };
 
   useEffect(() => {
-    if (userNumber) {
-      console.log('userNumber:', userNumber); 
-      fetchSavedTourList(userNumber); // Context 또는 localStorage에서 받아온 userNumber 사용
+    if (localUserNumber) {
+      console.log('Savelist에서 전달하려는 userNumber:', localUserNumber); 
+      fetchSavedTourList(localUserNumber); // 로컬 스토리지에서 가져온 userNumber 사용
     }
-  }, [userNumber]);
+  }, [localUserNumber]);
+  
 
   const fetchSavedTourList = async (userNumber) => {
     try {
       const data = await getSavedTours(userNumber);
       
-      // 받아온 데이터를 변환해서 저장
       const transformedData = data.map((tour) => ({
-        contentTitle: tour.content_title, // 백엔드의 필드명을 프론트엔드에 맞게 변환
-        thumbnailImage: tour.thumbnail_image, // 백엔드의 필드명을 프론트엔드에 맞게 변환
+        contentTitle: tour.content_title,
+        thumbnailImage: tour.thumbnail_image, 
       }));
 
-      setSavedTourList(transformedData); // 변환된 데이터를 상태에 저장
+      setSavedTourList(transformedData); 
     } catch (error) {
       console.error('저장한 관광지 목록 불러오기 실패:', error);
     }
@@ -80,9 +84,14 @@ const Savelist = () => {
   return (
     <SaveListContainer>
       <Header />
-      <MyTourList onOpenModal={handleOpenModal} />
+      <MyTourList onOpenModal={handleOpenModal} userNumber={localUserNumber}  />
       <SavedTourList savedTourData={savedTourList} />
-      <NewListModal show={isModalOpen} onClose={handleCloseModal} onConfirm={handleConfirm} />
+      <NewListModal 
+        show={isModalOpen} 
+        onClose={handleCloseModal} 
+        onConfirm={handleConfirm} 
+        userNumber={localUserNumber} // 로컬 상태의 userNumber 전달
+      />
     </SaveListContainer>
   );
 };
