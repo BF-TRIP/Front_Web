@@ -19,13 +19,8 @@ const SavedTourCardContainer = styled.div`
 const SavedTourTitle = styled.div`
   width: 80%;
   color: #000;
-  font-family: Pretendard;
   font-size: 1.25rem;
-  font-style: normal;
   font-weight: 600;
-  line-height: 150%; 
-  letter-spacing: -0.0175rem;
-  text-align: left;
   margin-left: 0.2rem;
   white-space: nowrap;
   overflow: hidden; 
@@ -36,11 +31,9 @@ const SavedTourImage = styled.div`
   width: 100%;
   height: 10.5rem;
   border-radius: 1rem;
-  background: #ddd;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
-  margin: 0 auto; 
   margin-top: 0.62rem;
 `;
 
@@ -67,11 +60,16 @@ const CustomCheckbox = styled.div`
   }
 `;
 
-const SavedTourItem = ({ image, title, showCheckbox }) => {
+const SavedTourItem = ({ contentId, image, title, showCheckbox, onSelectItem }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setIsChecked((prev) => !prev);
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    onSelectItem(contentId, newValue);  // 선택 시 contentId와 함께 onSelectItem 호출
+
+    // 콘솔에 체크된 contentId 출력
+    console.log(`Content ID ${contentId} is ${newValue ? 'checked' : 'unchecked'}`);
   };
 
   return (
@@ -90,9 +88,11 @@ const SavedTourItem = ({ image, title, showCheckbox }) => {
 };
 
 SavedTourItem.propTypes = {
+  contentId: PropTypes.number.isRequired, // contentId prop 추가
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  showCheckbox: PropTypes.bool, 
+  showCheckbox: PropTypes.bool,
+  onSelectItem: PropTypes.func.isRequired,  // 선택 함수 prop 전달
 };
 
 SavedTourItem.defaultProps = {
