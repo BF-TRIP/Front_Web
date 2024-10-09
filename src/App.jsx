@@ -11,6 +11,7 @@ import OnboardingFirstPage from './pages/onboarding/OnboardingFirstPage';
 import OnboardingSecondPage from './pages/onboarding/OnboardingSecondPage';
 import OnboardingThirdPage from './pages/onboarding/OnboardingThirdPage';
 import OnboardingFinalPage from './pages/onboarding/OnboardingFinalPage';
+import TourListPage from './pages/savelist/TourListPage';
 
 import { OnboardingProvider } from './utils/OnboardingContext';
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/onboarding-second" element={<OnboardingSecondPage />} />
           <Route path="/onboarding-third" element={<OnboardingThirdPage />} />
           <Route path="/onboarding-final" element={<OnboardingFinalPage />} />
+          <Route path="/tour-list" element={<TourListPage />} />
         </Routes>
       </Router>
     </OnboardingProvider>
