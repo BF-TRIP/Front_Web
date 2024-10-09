@@ -106,23 +106,31 @@ const Home = () => {
     }
   }, [state, updateOnboardingData, onboardingData]);
 
-  const fetchNearbyLocations = async (gpsX, gpsY) => {
-    try {
-      const data = await getNearbyLocations(gpsX, gpsY, userNumber);
-      setNearbyLocations(data);
-    } catch (error) {
-      console.error('내 위치 주변 관광지 데이터 불러오기 실패:', error);
+  useEffect(() => {
+    window.iOSToJavaScript = async function(gpsX, gpsY) {
+      console.log('Received GPS coordinates:', gpsX, gpsY);
+      
+      // 위치값을 성공적으로 받았을 때 alert 띄움
+      alert(`GPS 좌표를 성공적으로 받았습니다: X=${gpsX}, Y=${gpsY}`);
+  
+      try {
+        const data = await getNearbyLocations(gpsX, gpsY, userNumber);
+        setNearbyLocations(data); // 데이터를 상태에 저장
+      } catch (error) {
+        console.error('내 위치 주변 관광지 데이터 불러오기 실패:', error);
+      }
+    };
+  }, [userNumber]);
+  
+
+  const javaScriptToIOS = () => {
+    if (window.webkit?.messageHandlers?.serverEvent) {
+      console.log('Send Event');
+      window.webkit.messageHandlers.serverEvent.postMessage('Voice');
+    } else {
+      console.log('Cannot send event');
     }
   };
-
-  // 가짜 좌표값을 사용한 테스트
-  useEffect(() => {
-    const fakeGpsX = 126.98;
-    const fakeGpsY = 37.57;
-    if (userNumber) {
-      fetchNearbyLocations(fakeGpsX, fakeGpsY);
-    }
-  }, [userNumber]);
 
   return (
     <HomeContainer>
@@ -141,7 +149,7 @@ const Home = () => {
         <VoiceRecognitionButtonWrapper>
           <VoiceRecognitionButton
             onClick={() => {
-              console.log('Voice recognition button clicked');
+              javaScriptToIOS();
             }}
           />
         </VoiceRecognitionButtonWrapper>
