@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import NearbyTourCard from './NearbyTourCard';
-import nearbyTourData from '../../../../utils/nearbyTourData'; 
 
 const CardListContainer = styled.div`
   display: flex;
@@ -12,20 +12,35 @@ const CardListContainer = styled.div`
   }
 `;
 
-const NearbyTourCardList = () => {
+const NearbyTourCardList = ({ tourData, userNumber }) => { 
   return (
     <CardListContainer>
-      {nearbyTourData.map((tour, index) => (
+      {tourData.map((tour, index) => (
         <NearbyTourCard
           key={index}
-          image={tour.image}
-          title={tour.title}
-          subtitle={tour.subtitle}
-          description={tour.description}
+          originalImage={tour.originalImage} 
+          contentTitle={tour.contentTitle}    
+          addr={tour.addr}                  
+          description={tour.description}   
+          contentId={tour.contentId}          
+          userNumber={userNumber}             
         />
       ))}
     </CardListContainer>
   );
+};
+
+NearbyTourCardList.propTypes = {
+  tourData: PropTypes.arrayOf(
+    PropTypes.shape({
+      originalImage: PropTypes.string.isRequired,
+      contentTitle: PropTypes.string.isRequired,
+      addr: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      contentId: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  userNumber: PropTypes.number.isRequired,  
 };
 
 export default NearbyTourCardList;

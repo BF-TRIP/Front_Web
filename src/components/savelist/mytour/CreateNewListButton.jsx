@@ -1,7 +1,8 @@
-import { useState } from 'react'; // 모달 상태 관리를 위해 useState 추가
+import { useState } from 'react'; 
 import styled from 'styled-components';
 import plusIcon from '../../../assets/images/plus.svg'; 
-import NewListModal from '../newlist/NewListModal'; // 모달 컴포넌트 불러오기
+import NewListModal from '../newlist/NewListModal'; 
+import PropTypes from 'prop-types';
 
 const NewListButtonContainer = styled.div`
   width: 10.625rem;
@@ -40,21 +41,20 @@ const ButtonText = styled.p`
   white-space: pre-line; 
 `;
 
-const CreateNewListButton = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+const CreateNewListButton = ({ userNumber }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
-    setIsModalOpen(true); // 모달 열기
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
   };
 
   const handleConfirm = () => {
-    // 리스트 생성 로직 처리
     console.log('리스트가 생성되었습니다!');
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
   };
 
   return (
@@ -64,14 +64,18 @@ const CreateNewListButton = () => {
         <ButtonText>새로운 리스트를{`\n`}생성해보세요!</ButtonText>
       </NewListButtonContainer>
       
-      {/* 모달 추가 */}
       <NewListModal
         show={isModalOpen}
         onClose={handleCloseModal}
         onConfirm={handleConfirm}
+        userNumber={userNumber} // userNumber 전달
       />
     </>
   );
+};
+
+CreateNewListButton.propTypes = {
+  userNumber: PropTypes.string.isRequired, // userNumber를 필수로 받음
 };
 
 export default CreateNewListButton;

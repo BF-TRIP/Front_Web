@@ -1,18 +1,23 @@
-import { createContext, useState } from 'react';
-import PropTypes from 'prop-types'; 
+import { createContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 export const OnboardingContext = createContext();
 
 export const OnboardingProvider = ({ children }) => {
   const [onboardingData, setOnboardingData] = useState({
     userName: '',
+    userNumber: localStorage.getItem('userNumber') || '', 
     gender: '',
     year: '',
-    month: '',
-    day: '',
     selectedHandicaps: {},
     selectedStyles: [],
   });
+
+  useEffect(() => {
+    if (onboardingData.userNumber) {
+      localStorage.setItem('userNumber', onboardingData.userNumber);
+    }
+  }, [onboardingData.userNumber]);
 
   const updateOnboardingData = (key, value) => {
     setOnboardingData(prevData => ({
@@ -29,5 +34,5 @@ export const OnboardingProvider = ({ children }) => {
 };
 
 OnboardingProvider.propTypes = {
-  children: PropTypes.node.isRequired, 
+  children: PropTypes.node.isRequired,
 };

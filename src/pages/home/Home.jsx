@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
@@ -6,23 +6,25 @@ import VoiceRecognitionButton from '../../components/home/landing/voice/VoiceRec
 import RecommendedSection from '../../components/home/landing/recommendedTour/RecommendedSection';
 import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
 import messageImage from '../../assets/images/message.png';
+import getNearbyLocations from '../../api/home/getNearbyLocations';
+import { OnboardingContext } from '../../utils/OnboardingContext'; 
 
 const HomeContainer = styled.div`
-  width: 390px; 
-  height: 844px; 
+  width: 390px;
+  height: 844px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  overflow-y: auto; 
-  
+  overflow-y: auto;
+
   &::-webkit-scrollbar {
-    display: none; 
+    display: none;
   }
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const HeaderBackground = styled.div`
@@ -67,49 +69,60 @@ const VoiceRecognitionButtonWrapper = styled.div`
 
 const MessageBubble = styled.img`
   position: absolute;
-  top: 4.2rem; 
-  left: 12rem; 
+  top: 4.2rem;
+  left: 12rem;
   z-index: 3;
-  width: 11.5rem; 
+  width: 11.5rem;
   height: auto;
 `;
 
 const RecommendedSectionContainer = styled.div`
   width: 100%;
-  position: absolute; 
-  top: 13.1rem; 
+  position: absolute;
+  top: 13.1rem;
   left: 0;
   z-index: 4;
 `;
 
 const NearbySectionContainer = styled.div`
   width: 100%;
-  position: absolute; 
-  top: 29.3rem; 
+  position: absolute;
+  top: 29.3rem;
   left: 0;
   z-index: 4;
 `;
 
 const Home = () => {
-  const { state } = useLocation(); 
-  const userNumber = state?.userNumber || null; 
-  const userName = state?.userName || '사용자'; 
-  console.log('userNumber:', userNumber); 
+  const { state } = useLocation();
+  const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
+  const userNumber = state?.userNumber || onboardingData.userNumber || null;
+  const userName = state?.userName || onboardingData.userName || '사용자';
+  const [nearbyLocations, setNearbyLocations] = useState([]);
 
-  const javaScriptToIOS = () => {
-    if (window.webkit?.messageHandlers?.serverEvent) {
-      console.log('Send Event');
-      window.webkit.messageHandlers.serverEvent.postMessage('Voice');
-    } else {
-      console.log('Cannot send event');
+  useEffect(() => {
+    if (state?.userNumber && !onboardingData.userNumber) {
+      updateOnboardingData('userNumber', state.userNumber);
+      localStorage.setItem('userNumber', state.userNumber); 
+    }
+  }, [state, updateOnboardingData, onboardingData]);
+
+  const fetchNearbyLocations = async (gpsX, gpsY) => {
+    try {
+      const data = await getNearbyLocations(gpsX, gpsY, userNumber);
+      setNearbyLocations(data);
+    } catch (error) {
+      console.error('내 위치 주변 관광지 데이터 불러오기 실패:', error);
     }
   };
 
+  // 가짜 좌표값을 사용한 테스트
   useEffect(() => {
-    window.iOSToJavaScript = function() {
-      console.log('Event Occurred');
-    };
-  }, []);
+    const fakeGpsX = 126.98;
+    const fakeGpsY = 37.57;
+    if (userNumber) {
+      fetchNearbyLocations(fakeGpsX, fakeGpsY);
+    }
+  }, [userNumber]);
 
   return (
     <HomeContainer>
@@ -121,13 +134,14 @@ const Home = () => {
         <RecommendedSection userName={userName} />
       </RecommendedSectionContainer>
       <NearbySectionContainer>
-        <NearbyTourSection />
+        <NearbyTourSection nearbyLocations={nearbyLocations} userNumber={userNumber} /> 
       </NearbySectionContainer>
+
       <VoiceRecognitionButtonBackground>
         <VoiceRecognitionButtonWrapper>
           <VoiceRecognitionButton
             onClick={() => {
-              javaScriptToIOS();
+              console.log('Voice recognition button clicked');
             }}
           />
         </VoiceRecognitionButtonWrapper>
