@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const BackgroundContainer = styled.div`
   width: 100%;
@@ -39,10 +40,9 @@ const AddToListButton = styled.button`
   }
 `;
 
-const AddToListFooter = () => {
+const AddToListFooter = ({ onAddToList }) => {
   const handleAddToList = () => {
-    console.log("리스트에 추가 버튼 클릭");
-    // 실제 리스트 추가 동작을 여기서 처리
+    onAddToList();  
   };
 
   return (
@@ -50,6 +50,10 @@ const AddToListFooter = () => {
       <AddToListButton onClick={handleAddToList}>리스트에 추가</AddToListButton>
     </BackgroundContainer>
   );
+};
+
+AddToListFooter.propTypes = {
+  onAddToList: PropTypes.func.isRequired,  
 };
 
 export default AddToListFooter;

@@ -11,7 +11,6 @@ const HeaderContainer = styled.div`
   padding: 0 1rem;
 `;
 
-
 const BackButton = styled.img`
   width: 0.625rem;
   height: 1.04431rem;
@@ -19,18 +18,16 @@ const BackButton = styled.img`
   cursor: pointer;
 `;
 
-
 const ListTitle = styled.h1`
   flex-grow: 1;
   font-weight: 600;
   margin: 0;
-
   color: #000;
   font-family: Pretendard;
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 150%; /* 1.6875rem */
+  line-height: 150%;
   letter-spacing: -0.0175rem;
   margin-left: 0.63rem;
 `;
@@ -42,22 +39,21 @@ const Divider = styled.div`
   background: #F7F6FB;;
 `;
 
-
-const AddToListHeader = ({ onBack }) => {
+const AddToListHeader = ({ listName, onBack }) => {  
   return (
     <>
-    <HeaderContainer>
-      <BackButton src={backIcon} alt="뒤로 가기" onClick={onBack} />
-      <ListTitle>리스트 이름</ListTitle>
-    </HeaderContainer>
-    <Divider />
+      <HeaderContainer>
+        <BackButton src={backIcon} alt="뒤로 가기" onClick={onBack} />
+        <ListTitle>{listName}</ListTitle>  
+      </HeaderContainer>
+      <Divider />
     </>
   );
 };
 
 AddToListHeader.propTypes = {
-  listName: PropTypes.string.isRequired,
-  onBack: PropTypes.func.isRequired, 
+  listName: PropTypes.string.isRequired, 
+  onBack: PropTypes.func.isRequired,  
 };
 
 export default AddToListHeader;
