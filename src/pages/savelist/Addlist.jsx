@@ -14,30 +14,37 @@ const Addlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [userNumber, setUserNumber] = useState(null);
+  const [courseNumber, setCourseNumber] = useState(null);
 
   useEffect(() => {
     const storedUserNumber = localStorage.getItem('userNumber');
+    const receivedCourseNumber = location.state?.courseNumber; 
+
     if (storedUserNumber) {
       setUserNumber(storedUserNumber);
     } else {
       console.warn('userNumber가 로컬스토리지에 존재하지 않습니다.');
     }
-  }, []);
 
-  const { courseName } = location.state || { courseName: '리스트 이름' };
+    if (receivedCourseNumber) {
+      setCourseNumber(receivedCourseNumber);
+    } else {
+      console.warn('courseNumber가 전달되지 않았습니다.');
+    }
+  }, [location.state]);
 
-  // 뒤로 가기 함수
   const handleBack = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
   return (
     <AddListContainer>
-      {userNumber && (
+      {userNumber && courseNumber && (
         <AddToList 
-          listName={courseName}  
-          userNumber={userNumber}  
-          onBack={handleBack}  
+          listName={location.state?.listName || '리스트 이름'}
+          userNumber={userNumber}
+          courseNumber={courseNumber} 
+          onBack={handleBack}
         />
       )}
     </AddListContainer>

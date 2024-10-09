@@ -6,7 +6,7 @@ const createCourse = async (userNumber, name, description) => {
     const response = await axios.post(`${BASE_URL}/course/${userNumber}/create`, null, {
       params: { name, description }
     });
-    return response.data; 
+    return response.data;
   } catch (error) {
     console.error('코스 생성 실패:', error);
     throw error;

@@ -106,7 +106,7 @@ const ConfirmButton = styled.button`
 const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState(''); 
-  const navigate = useNavigate(); // useNavigate 사용
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('NewListModal에서 전달받은 userNumber:', userNumber);
@@ -115,10 +115,17 @@ const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
   const handleCreateCourse = async () => {
     try {
       console.log('코스 생성 요청: userNumber:', userNumber, '코스명:', courseName, '설명:', courseDescription);
-      await createCourse(userNumber, courseName, courseDescription); 
+      const { courseNumber, courseName: createdCourseName } = await createCourse(userNumber, courseName, courseDescription); 
       console.log('코스가 생성되었습니다!');
-      onConfirm(); // 모달 닫기
-      navigate('/add-list', { state: { courseName } }); // 생성된 코스 이름과 함께 이동
+
+      navigate('/add-list', { 
+        state: { 
+          courseNumber, 
+          listName: createdCourseName 
+        } 
+      });
+
+      onConfirm(); 
     } catch (error) {
       console.error('코스 생성 실패:', error);
     }
