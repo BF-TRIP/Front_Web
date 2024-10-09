@@ -9,7 +9,6 @@ const ListItemContainer = styled.div`
   border-radius: 1.25rem;
   overflow: hidden;
   position: relative;
-  cursor: pointer;
   background-color: #f5f5f5;
 `;
 
