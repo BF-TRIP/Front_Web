@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
+import saveIcon from '../../../../assets/images/save.svg'; 
+import savedIcon from '../../../../assets/images/save2.svg';
 
 const CardContainer = styled.div`
   width: 14.0625rem;
@@ -13,6 +16,7 @@ const CardContainer = styled.div`
   border-radius: 1.25rem;
   padding: 0.38rem;
   cursor: pointer;
+  position: relative; 
 `;
 
 const CardImage = styled.img`
@@ -44,22 +48,53 @@ const CardSubtitle = styled.div`
   line-height: normal;
 `;
 
+const ScrapButton = styled.button`
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  outline: none;
+ 
+  &:focus {
+    outline: none;
+  }
+`;
+
+const ScrapIcon = styled.img`
+  width: 2rem;
+  height: 2rem;
+`;
+
 const NearbyTourCard = ({ image, title, subtitle, description }) => {
   const navigate = useNavigate(); 
+  const [isScraped, setIsScraped] = useState(false); 
 
   const handleCardClick = () => {
     navigate('/detail', { 
       state: { 
-        images: [image],  // DetailTop에 들어가는 images 배열
-        placeName: title, // 장소 이름
-        description: description, // 전달된 description 사용
-        address: subtitle  // subtitle을 address로 사용
+        images: [image],  
+        placeName: title, 
+        description: description, 
+        address: subtitle  
       }
     }); 
   };
 
+  const toggleScrap = () => {
+    setIsScraped(!isScraped);
+  };
+
   return (
     <CardContainer onClick={handleCardClick}> 
+      <ScrapButton onClick={(e) => {
+        e.stopPropagation(); 
+        toggleScrap();
+      }}>
+        <ScrapIcon src={isScraped ? savedIcon : saveIcon} alt="스크랩 아이콘" />
+      </ScrapButton>
       <CardImage src={image} alt={title} />
       <CardContent>
         <CardTitle>{title}</CardTitle>
@@ -73,7 +108,7 @@ NearbyTourCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,  // description 추가
+  description: PropTypes.string.isRequired, 
 };
 
 export default NearbyTourCard;
