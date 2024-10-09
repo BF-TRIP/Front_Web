@@ -58,7 +58,6 @@ const AddToList = ({ userNumber, courseNumber, listName, onBack }) => {
   const handleAddToList = async () => {
     try {
       await addCourseItems(courseNumber, selectedItems); 
-      alert('선택한 관광지가 코스에 추가되었습니다.');
       navigate('/tour-list', { state: { courseNumber } }); 
     } catch (error) {
       console.error('관광지 추가 중 오류 발생:', error);
