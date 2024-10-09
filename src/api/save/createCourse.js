@@ -1,12 +1,12 @@
 import axios from 'axios';
-import BASE_URL from '../config'; // BASE_URL을 설정한 config 파일을 가져옴
+import BASE_URL from '../config'; 
 
-const createCourse = async (userNumber, name) => {
+const createCourse = async (userNumber, name, description) => {
   try {
     const response = await axios.post(`${BASE_URL}/course/${userNumber}/create`, null, {
-      params: { name }
+      params: { name, description }
     });
-    return response.data; // 생성된 코스 데이터를 반환
+    return response.data; 
   } catch (error) {
     console.error('코스 생성 실패:', error);
     throw error;
