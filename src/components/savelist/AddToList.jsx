@@ -46,7 +46,7 @@ const AddToList = ({ userNumber, listName, onBack }) => {
   return (
     <Container>
       <AddToListHeader listName={listName} onBack={onBack} />  
-      <SavedTourList showCheckbox={true} savedTourData={savedTourData} />
+      <SavedTourList showSubtitle={true} showCheckbox={true} savedTourData={savedTourData} />
       <AddToListFooter /> 
     </Container>
   );

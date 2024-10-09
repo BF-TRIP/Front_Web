@@ -15,6 +15,16 @@ const Title = styled.div`
   line-height: 1.375rem; 
 `;
 
+const Subtitle = styled.div`
+  color: var(--Color-2, #676767);
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 1.40625rem */
+  letter-spacing: -0.0175rem;
+  margin-top: 0.3rem;
+`;
+
 const SavedTourListContainer = styled.div`
   margin-top: 1rem;
   display: grid;
@@ -22,10 +32,13 @@ const SavedTourListContainer = styled.div`
   gap: 0.88rem;
 `;
 
-const SavedTourList = ({ savedTourData, showCheckbox }) => { 
+const SavedTourList = ({ savedTourData, showSubtitle, showCheckbox }) => { 
   return (
     <Container>
       <Title>저장한 관광지</Title>
+      {showSubtitle && (
+        <Subtitle>저장한 공간들을 리스트에 추가해보세요</Subtitle> 
+      )}
       <SavedTourListContainer>
         {savedTourData.map((tour, index) => (
           <SavedTourItem 
@@ -42,6 +55,7 @@ const SavedTourList = ({ savedTourData, showCheckbox }) => {
 
 SavedTourList.propTypes = {
   savedTourData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  showSubtitle: PropTypes.bool,
   showCheckbox: PropTypes.bool,
 };
 

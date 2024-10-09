@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+import { useNavigate } from 'react-router-dom'; 
 import closeIcon from '../../../assets/images/close.svg';
-import createCourse from '../../../api/save/createCourse'; // API 함수 import
+import createCourse from '../../../api/save/createCourse'; 
 
 const ModalOverlay = styled.div`
   position: absolute;
