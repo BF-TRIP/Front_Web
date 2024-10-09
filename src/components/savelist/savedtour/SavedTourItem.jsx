@@ -31,10 +31,22 @@ const SavedTourImage = styled.div`
   width: 100%;
   height: 10.5rem;
   border-radius: 1rem;
-  background-image: url(${(props) => props.image});
+  background-color: #ddd;  /* 회색 배경 */
+  background-image: ${(props) => (props.image ? `url(${props.image})` : 'none')}; 
   background-size: cover;
   background-position: center;
   margin-top: 0.62rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
+const PlaceholderIcon = styled.img`
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+  display: ${(props) => (props.image ? 'none' : 'block')}; 
 `;
 
 const CustomCheckbox = styled.div`
@@ -66,9 +78,8 @@ const SavedTourItem = ({ contentId, image, title, showCheckbox, onSelectItem }) 
   const handleCheckboxChange = () => {
     const newValue = !isChecked;
     setIsChecked(newValue);
-    onSelectItem(contentId, newValue);  // 선택 시 contentId와 함께 onSelectItem 호출
+    onSelectItem(contentId, newValue);  
 
-    // 콘솔에 체크된 contentId 출력
     console.log(`Content ID ${contentId} is ${newValue ? 'checked' : 'unchecked'}`);
   };
 
@@ -82,17 +93,19 @@ const SavedTourItem = ({ contentId, image, title, showCheckbox, onSelectItem }) 
         />
       )}
       <SavedTourTitle>{title}</SavedTourTitle>
-      <SavedTourImage image={image} />
+      <SavedTourImage image={image}>
+        <PlaceholderIcon src="src/assets/images/image.png" alt="Placeholder Icon" image={image} />
+      </SavedTourImage>
     </SavedTourCardContainer>
   );
 };
 
 SavedTourItem.propTypes = {
-  contentId: PropTypes.number.isRequired, // contentId prop 추가
-  image: PropTypes.string.isRequired,
+  contentId: PropTypes.number.isRequired, 
+  image: PropTypes.string, 
   title: PropTypes.string.isRequired,
   showCheckbox: PropTypes.bool,
-  onSelectItem: PropTypes.func.isRequired,  // 선택 함수 prop 전달
+  onSelectItem: PropTypes.func.isRequired, 
 };
 
 SavedTourItem.defaultProps = {
