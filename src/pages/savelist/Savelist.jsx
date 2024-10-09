@@ -14,6 +14,12 @@ const SaveListContainer = styled.div`
   background-color: #fff;
   overflow-y: auto;
   padding-bottom: 10em;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const Savelist = () => {
