@@ -7,6 +7,7 @@ import RecommendedSection from '../../components/home/landing/recommendedTour/Re
 import NearbyTourSection from '../../components/home/landing/nearbyTour/NearbyTourSection';
 import VoiceRecognitionModal from '../../components/home/landing/voice/VoiceRecognitionModal'; 
 import getRecommendedLocations from '../../api/home/recommend';  
+import messageImage from '../../assets/images/message.png'; // 말풍선 이미지 추가
 
 const HomeContainer = styled.div`
   width: 390px; 
@@ -66,6 +67,15 @@ const VoiceRecognitionButtonWrapper = styled.div`
   margin-top: -2rem;
 `;
 
+const MessageBubble = styled.img`
+  position: absolute;
+  top: 4.2rem; 
+  left: 12rem; 
+  z-index: 3;
+  width: 11.5rem; 
+  height: auto;
+`;
+
 const RecommendedSectionContainer = styled.div`
   width: 100%;
   position: absolute; 
@@ -104,12 +114,12 @@ const Home = () => {
         console.error('추천 관광지 데이터를 불러오는 중 오류 발생:', error);
       }
     }
-  }, [userNumber]); // userNumber가 변경될 때마다 함수가 재생성됨
+  }, [userNumber]);
 
   // 컴포넌트가 마운트되었을 때 추천 관광지 데이터를 가져옴
   useEffect(() => {
     fetchRecommendedLocations();
-  }, [fetchRecommendedLocations]); 
+  }, [fetchRecommendedLocations]);
 
   // JavaScript와 iOS 간 통신 함수
   const javaScriptToIOS = () => {
@@ -135,7 +145,7 @@ const Home = () => {
       </HeaderBackground>
       <RoundedBackground />
       <RecommendedSectionContainer>
-        <RecommendedSection recommendedLocations={recommendedLocations} userName={userName} /> 
+        <RecommendedSection recommendedLocations={recommendedLocations} userName={userName} />
       </RecommendedSectionContainer>
       <NearbySectionContainer>
         <NearbyTourSection />
@@ -145,11 +155,13 @@ const Home = () => {
           <VoiceRecognitionButton
             onClick={() => {
               openModal();
-              javaScriptToIOS(); // VoiceRecognitionButton 클릭 시 iOS로 이벤트 전송
+              javaScriptToIOS();
             }}
           />
         </VoiceRecognitionButtonWrapper>
       </VoiceRecognitionButtonBackground>
+      {/* 말풍선 이미지 렌더링 */}
+      <MessageBubble src={messageImage} alt="음성으로 검색할 수 있어요!" />
       <VoiceRecognitionModal isOpen={isModalOpen} onClose={closeModal} />
     </HomeContainer>
   );
