@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState } from 'react'; 
+import { useNavigate } from 'react-router-dom'; 
 import saveIcon from '../../../assets/images/save.svg'; 
 import savedIcon from '../../../assets/images/save2.svg';
 import saveCourse from '../../../api/save/saveCourse'; 
@@ -19,6 +20,7 @@ const CardContainer = styled.div`
   margin-bottom: 1rem;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 `;
 
 const CardImage = styled.div`
@@ -105,6 +107,7 @@ const RecommendedTourCard = ({
 }) => {
   const [isScraped, setIsScraped] = useState(false);
   const userNumber = localStorage.getItem('userNumber');
+  const navigate = useNavigate();  // useNavigate 사용
 
   const toggleScrap = async (e) => {
     e.stopPropagation();
@@ -122,8 +125,34 @@ const RecommendedTourCard = ({
     }
   };
 
+  const handleCardClick = () => {
+    console.log("Navigating to detail with:", {
+      contentId,
+      title,
+      imageUrl,
+      address,
+    });
+    
+    navigate(`/detail`, {
+      state: {
+        contentId,  
+        title,     
+        address,
+        images: [imageUrl],  
+        publicTransport,
+        wheelchair,
+        stroller,
+        braileBlock,
+        hearingHandicapEtc,
+        
+      },
+    });
+  };
+
+  
+
   return (
-    <CardContainer>
+    <CardContainer onClick={handleCardClick}>
       <ScrapButton onClick={toggleScrap}>
         <ScrapIcon src={isScraped ? savedIcon : saveIcon} alt="스크랩 아이콘" />
       </ScrapButton>
