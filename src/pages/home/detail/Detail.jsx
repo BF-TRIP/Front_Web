@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DetailTop from '../../../components/home/detail/DetailTop'; 
 import TitleSection from '../../../components/home/detail/TitleSection'; 
 import InfoSection from '../../../components/home/detail/InfoSection'; 
-import getDetailData from '../../../api/home/getDetailData';  // 상세 정보 API 호출 함수
+import getDetailData from '../../../api/home/getDetailData'; 
 
 const DetailPageContainer = styled.div`
   width: 390px;
@@ -16,9 +16,6 @@ const DetailPageContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 `;
 
 const SectionDivider = styled.div`
@@ -29,16 +26,17 @@ const SectionDivider = styled.div`
 
 const Detail = () => {
   const location = useLocation();  
-  const { contentId, images = [], placeName = '장소 이름', description = '설명', address = '주소' } = location.state || {};
-
-  const [detailData, setDetailData] = useState({});  // 상세 정보 상태 관리
+  const { contentId, images = [], title = '장소 이름', placeName = '장소 이름', address = '주소' } = location.state || {};
+  
+  // 새로운 state에 상세 정보를 저장
+  const [detailData, setDetailData] = useState({});
 
   useEffect(() => {
     const fetchDetailData = async () => {
       if (contentId) {
         try {
-          const data = await getDetailData(contentId);  // API 요청
-          setDetailData(data);
+          const data = await getDetailData(contentId);  
+          setDetailData(data);  
         } catch (error) {
           console.error('상세 정보를 불러오는 중 오류 발생:', error);
         }
@@ -52,12 +50,12 @@ const Detail = () => {
     <DetailPageContainer>
       <DetailTop images={images} />
       <TitleSection 
-        placeName={placeName}
-        description={description}  
+        placeName={placeName !== '장소 이름' ? placeName : title}  
+        description={detailData.description || '설명이 없습니다.'}  
         address={address}
       />
       <SectionDivider />
-      <InfoSection details={detailData} />  {/* 상세 정보를 전달 */}
+      <InfoSection details={detailData} />
     </DetailPageContainer>
   );
 };
