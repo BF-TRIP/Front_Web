@@ -124,6 +124,22 @@ const Home = () => {
     }
   }, [userNumber]);
 
+  // iOS와의 통신 함수 추가
+  const javaScriptToIOS = () => {
+    if (window.webkit?.messageHandlers?.serverEvent) {
+      console.log('Send Event');
+      window.webkit.messageHandlers.serverEvent.postMessage('Voice');
+    } else {
+      console.log('Cannot send event');
+    }
+  };
+
+  useEffect(() => {
+    window.iOSToJavaScript = function() {
+      console.log('Event Occurred');
+    };
+  }, []);
+
   return (
     <HomeContainer>
       <HeaderBackground>
@@ -141,7 +157,7 @@ const Home = () => {
         <VoiceRecognitionButtonWrapper>
           <VoiceRecognitionButton
             onClick={() => {
-              console.log('Voice recognition button clicked');
+              javaScriptToIOS(); 
             }}
           />
         </VoiceRecognitionButtonWrapper>
