@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import saveIcon from '../../../../assets/images/save.svg'; 
 import savedIcon from '../../../../assets/images/save2.svg';
 import saveCourse from '../../../../api/save/saveCourse'; 
+import defaultImageIcon from '../../../../assets/images/image.png'; 
 
 const CardContainer = styled.div`
   width: 14.0625rem;
@@ -20,11 +21,30 @@ const CardContainer = styled.div`
   position: relative; 
 `;
 
+const CardImageContainer = styled.div`
+  width: 100%;
+  height: 7.375rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ddd;
+  border-radius: 1.125rem;
+  position: relative;
+`;
+
 const CardImage = styled.img`
   width: 100%;
-  height: 7.375rem; 
+  height: 100%;
   object-fit: cover;
   border-radius: 1.125rem;
+  display: ${(props) => (props.hasImage ? 'block' : 'none')};
+`;
+
+const DefaultIcon = styled.img`
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+  display: ${(props) => (props.hasImage ? 'none' : 'block')};
 `;
 
 const CardContent = styled.div`
@@ -99,12 +119,17 @@ const NearbyTourCard = ({ contentTitle, addr, originalImage, description, conten
     }
   };
 
+  const hasImage = !!originalImage;
+
   return (
     <CardContainer onClick={handleCardClick}> 
       <ScrapButton onClick={toggleScrap}>
         <ScrapIcon src={isScraped ? savedIcon : saveIcon} alt="스크랩 아이콘" />
       </ScrapButton>
-      <CardImage src={originalImage || '/path/to/default/image.jpg'} alt={contentTitle} />
+      <CardImageContainer>
+        <CardImage src={originalImage} alt={contentTitle} hasImage={hasImage} />
+        <DefaultIcon src={defaultImageIcon} alt="기본 이미지 아이콘" hasImage={hasImage} />
+      </CardImageContainer>
       <CardContent>
         <CardTitle>{contentTitle}</CardTitle>  
         <CardSubtitle>{addr}</CardSubtitle> 
