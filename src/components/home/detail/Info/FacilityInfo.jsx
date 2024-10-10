@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import wheelchairIcon from '../../../../assets/images/wheelchair.svg'; 
-import familyIcon from '../../../../assets/images/family.svg'; 
-import strollerIcon from '../../../../assets/images/stroller.svg'; 
-import visualIcon from '../../../../assets/images/visual.svg'; 
-import hearingIcon from '../../../../assets/images/hearing.svg'; 
+import WheelchairIcon from '../../../../assets/images/senior.png';
+import FamilyIcon from '../../../../assets/images/wheelchair.png';
+import StrollerIcon from '../../../../assets/images/infant.png';
+import VisualIcon from '../../../../assets/images/blind.png';
+import HearingIcon from '../../../../assets/images/deaf.png';
 
 const FacilityInfoContainer = styled.div`
   display: flex;
@@ -18,29 +18,10 @@ const AccessibilityIcons = styled.div`
   gap: 2.31rem;
 `;
 
-const WheelchairIconStyled = styled.img`
-  width: 1.94888rem;
-  height: 2.3665rem;
-`;
-
-const FamilyIconStyled = styled.img`
-width: 2.3665rem;
-height: 2.58144rem;
-`;
-
-const StrollerIconStyled = styled.img`
-width: 2.3665rem;
-height: 2.16613rem;
-`;
-
-const VisualIconStyled = styled.img`
-width: 2.875rem;
-height: 2.875rem;
-`;
-
-const HearingIconStyled = styled.img`
-width: 1.80969rem;
-height: 2.64488rem;
+const Icon = styled.img`
+  width: auto;
+  height: 2.5rem;
+  opacity: ${(props) => (props.isActive ? '1' : '0.2')}; 
 `;
 
 const Divider = styled.div`
@@ -55,21 +36,11 @@ const FacilityInfo = ({ wheelchair, family, stroller, visual, hearing }) => {
     <>
     <FacilityInfoContainer>
       <AccessibilityIcons>
-        {wheelchair && (
-          <WheelchairIconStyled src={wheelchairIcon} alt="Wheelchair accessible" />
-        )}
-        {family && (
-          <FamilyIconStyled src={familyIcon} alt="Family friendly" />
-        )}
-        {stroller && (
-          <StrollerIconStyled src={strollerIcon} alt="Stroller accessible" />
-        )}
-        {visual && (
-          <VisualIconStyled src={visualIcon} alt="Visual aid available" />
-        )}
-        {hearing && (
-          <HearingIconStyled src={hearingIcon} alt="Hearing aid available" />
-        )}
+        <Icon src={FamilyIcon} alt="Family Friendly" isActive={!!family} />
+        <Icon src={WheelchairIcon} alt="Wheelchair Accessible" isActive={!!wheelchair} />
+        <Icon src={VisualIcon} alt="Braille Block" isActive={!!visual} />
+        <Icon src={StrollerIcon} alt="Stroller Accessible" isActive={!!stroller} />
+        <Icon src={HearingIcon} alt="Hearing Aid Accessible" isActive={!!hearing} />
       </AccessibilityIcons>
     </FacilityInfoContainer>
     <Divider />

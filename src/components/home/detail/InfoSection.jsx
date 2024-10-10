@@ -1,7 +1,7 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import FacilityInfo from './Info/FacilityInfo';
 import DetailedFacilityInfo from './Info/DetailedFacilityInfo';
-import LocationInfo from './Info/LocationInfo';
 
 const InfoSectionContainer = styled.div`
   padding: 1rem;
@@ -21,28 +21,60 @@ const SectionTitle = styled.div`
   `}
 `;
 
-const InfoSection = () => {
+const InfoSection = ({ details }) => {
+  const {
+    wheelchair,
+    restroom,
+    stroller,
+    braileBlock,
+    hearingHandicapEtc,
+    guideHuman,
+    helpDog,
+    signGuide,
+    publicTransport, // 고령자 접근성 관련 정보
+  } = details;
+
   return (
     <InfoSectionContainer>
       <SectionTitle>시설물 정보</SectionTitle>
       <FacilityInfo 
-        wheelchair={true} 
-        family={true} 
-        stroller={true} 
-        visual={true} 
-        hearing={true} 
+        wheelchair={!!wheelchair || !!restroom || !!publicTransport}  
+        family={!!guideHuman || !!signGuide}    
+        stroller={!!stroller}                  
+        visual={!!braileBlock || !!helpDog}   
+        hearing={!!hearingHandicapEtc}         
       />
       
       <SectionTitle>세부 시설물 정보</SectionTitle>
       <DetailedFacilityInfo
-        wheelchairInfo="장애인주차장, 휠체어 대여"
-        visualImpairmentInfo="점자블록, 보조견 동반 가능"
+        visualImpairmentInfo={guideHuman || braileBlock || ''} 
+        wheelchairInfo={[wheelchair, restroom, publicTransport].filter(Boolean).join(', ') || ''} 
+        hearingImpairmentInfo={hearingHandicapEtc || signGuide || ''} 
+        familyInfo={stroller || ''} 
+        elderlyInfo={publicTransport || ''} 
+        helpDog={helpDog || ''}  
       />
-
-      <SectionTitle isLocation={true}>위치 정보</SectionTitle>
-      <LocationInfo /> 
     </InfoSectionContainer>
   );
+};
+
+InfoSection.propTypes = {
+  details: PropTypes.shape({
+    wheelchair: PropTypes.string,
+    restroom: PropTypes.string,
+    stroller: PropTypes.string,
+    braileBlock: PropTypes.string,
+    hearingHandicapEtc: PropTypes.string,
+    guideHuman: PropTypes.string,
+    helpDog: PropTypes.string,  
+    signGuide: PropTypes.string,
+    publicTransport: PropTypes.string, 
+    locationInfo: PropTypes.shape({
+      address: PropTypes.string,
+      gpsX: PropTypes.number,
+      gpsY: PropTypes.number,
+    }),
+  }).isRequired,
 };
 
 export default InfoSection;

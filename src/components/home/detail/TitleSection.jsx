@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import locationIcon from '../../../assets/images/location.svg'; // 주소 옆 아이콘 이미지
+import locationIcon from '../../../assets/images/location.svg'; 
 
 const TitleSectionContainer = styled.div`
   width: 100%;
@@ -77,8 +77,7 @@ const TitleSection = ({ placeName, description, address }) => {
     setIsExpanded(!isExpanded);
   };
 
-  // 설명이 길면 일정 글자수만큼 자르고, 더보기 버튼 표시
-  const maxDescriptionLength = 68; // 자를 길이 설정
+  const maxDescriptionLength = 68;
   const shortenedDescription = description.length > maxDescriptionLength && !isExpanded 
     ? description.substring(0, maxDescriptionLength) + '...' 
     : description;
@@ -94,7 +93,7 @@ const TitleSection = ({ placeName, description, address }) => {
           </MoreButton>
         )}
       </Description>
-      <Divider /> {/* 구분선 추가 */}
+      <Divider /> 
       <AddressRow>
         <AddressIcon src={locationIcon} alt="Location" />
         <AddressText>{address}</AddressText>
@@ -102,6 +101,7 @@ const TitleSection = ({ placeName, description, address }) => {
     </TitleSectionContainer>
   );
 };
+
 
 TitleSection.propTypes = {
   placeName: PropTypes.string.isRequired,

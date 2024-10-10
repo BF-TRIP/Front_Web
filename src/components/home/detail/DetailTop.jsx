@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import BackButton from '../../common/BackButton'; 
 import BookmarkButton from '../../common/BookmarkButton'; 
+import defaultImage from '../../../assets/images/image.png';  
 
 const TopContainer = styled.div`
   position: relative;
@@ -31,13 +32,19 @@ const ImageSlider = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #ddd;
-  
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 `;
+
+const DefaultImage = styled.img`
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+`;  
 
 const SlidePagination = styled.div`
   position: absolute;
@@ -91,9 +98,13 @@ const DetailTop = ({ images }) => {
       </Header>
 
       <ImageSlider>
-        <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
+        {images.length > 0 ? (
+          <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
+        ) : (
+          <DefaultImage src={defaultImage} alt="Default" />  
+        )}
         <SlidePagination>
-          {currentIndex + 1} / {images.length}
+          {currentIndex + 1} / {images.length || 1} 
         </SlidePagination>
       </ImageSlider>
     </TopContainer>
