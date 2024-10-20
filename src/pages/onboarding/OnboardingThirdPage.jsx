@@ -6,6 +6,7 @@ const PageContainer = styled.div`
   width: 390px;
   height: 844px;
   background-color: #fff;
+  overflow: hidden;
 `;
 
 const OnboardingThirdPage = () => {
