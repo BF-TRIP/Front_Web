@@ -25,7 +25,7 @@ const Image = styled.img`
 `;
 
 const OnboardingFinalStep = ({ onConfirm }) => {
-  const { onboardingData, updateOnboardingData } = useContext(OnboardingContext); // Context 사용
+  const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
   const navigate = useNavigate();
   
   const calculateAge = (year) => {
@@ -75,15 +75,25 @@ const OnboardingFinalStep = ({ onConfirm }) => {
       console.log('온보딩 후 저장된 userNumber:', onboardingData.userNumber);
       console.log('온보딩 후 저장된 userName:', onboardingData.userName);
   
-      navigate('/home', { state: { userNumber: response.userNumber, userName: response.userName } });
+      // iOS로 confirm 메시지 전송
+      javaScriptToIOS();
 
-  
+      navigate('/home', { state: { userNumber: response.userNumber, userName: response.userName } });
       onConfirm();
     } catch (error) {
       console.error('온보딩 데이터 전송 실패:', error);
     }
   };
-  
+
+  // iOS로 메시지를 보내는 함수
+  const javaScriptToIOS = () => {
+    if (window.webkit?.messageHandlers?.serverEvent) {
+      console.log('확인 이벤트 전송');
+      window.webkit.messageHandlers.serverEvent.postMessage('confirm');
+    } else {
+      console.log('확인 이벤트 전송 불가');
+    }
+  };  
 
   return (
     <Container>
