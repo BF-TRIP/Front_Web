@@ -38,6 +38,8 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     height: 100%; /* body와 html의 높이를 100%로 설정 */
+    overscroll-behavior: none;
+    overflow: hidden;
   }
 
   body {

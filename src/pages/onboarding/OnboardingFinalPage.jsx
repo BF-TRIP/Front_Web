@@ -5,6 +5,7 @@ const PageContainer = styled.div`
   width: 390px;
   height: 844px;
   background-color: var(--Color-12, #FFFCE7);
+  overflow: hidden;
 `;
 
 const OnboardingFinalPage = () => {

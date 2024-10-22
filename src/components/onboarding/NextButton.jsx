@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const ButtonContainer = styled.div`
-  position: absolute;
+  position: fixed;  // absolute 대신 fixed 사용
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 24.375rem;
+  left: 0;
+  width: 100%;  // 화면 전체 너비를 사용
+  max-width: 430px;  // 최대 너비 고정 (아이폰 크기에 맞춰서 설정)
   height: 6.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--Color, #FFE54A);
   border: 1px solid var(--Color, #FFE54A);
-  z-index: 1000; 
+  z-index: 1000;
+  margin: 0 auto;  // 브라우저에서 가운데 정렬
 `;
 
 const Button = styled.button`
