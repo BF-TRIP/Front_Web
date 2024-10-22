@@ -65,6 +65,22 @@ const Savelist = () => {
     }
   }, [localUserNumber]);
 
+  // 화면이 다시 나타날 때마다 API 호출
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && localUserNumber) {
+        console.log('화면이 다시 보입니다. 데이터를 갱신합니다.');
+        fetchSavedTourList(localUserNumber);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [localUserNumber]);
+
   const fetchSavedTourList = async (userNumber) => {
     try {
       const data = await getSavedTours(userNumber);
