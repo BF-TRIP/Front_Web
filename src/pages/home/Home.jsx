@@ -115,14 +115,17 @@ const Home = () => {
     }
   };
 
-  // 가짜 좌표값을 사용한 테스트
+  // iOS에서 좌표 데이터를 전달받는 함수
   useEffect(() => {
-    const fakeGpsX = 126.98;
-    const fakeGpsY = 37.57;
-    if (userNumber) {
-      fetchNearbyLocations(fakeGpsX, fakeGpsY);
-    }
+    window.iOSToJavaScript = function(gpsX, gpsY) {
+      console.log('iOS로부터 받은 좌표:', gpsX, gpsY);
+
+      if (userNumber) {
+        fetchNearbyLocations(gpsX, gpsY);  
+      }
+    };
   }, [userNumber]);
+
 
   // iOS와의 통신 함수 추가
   const javaScriptToIOS = () => {
@@ -133,12 +136,6 @@ const Home = () => {
       console.log('Cannot send event');
     }
   };
-
-  useEffect(() => {
-    window.iOSToJavaScript = function() {
-      console.log('Event Occurred');
-    };
-  }, []);
 
   return (
     <HomeContainer>
