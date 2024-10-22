@@ -46,7 +46,7 @@ const NextButton = ({ onClick }) => {
   return (
     <ButtonContainer>
       <Button onClick={onClick}>
-        <ButtonText>다음임</ButtonText>
+        <ButtonText>다음</ButtonText>
       </Button>
     </ButtonContainer>
   );
