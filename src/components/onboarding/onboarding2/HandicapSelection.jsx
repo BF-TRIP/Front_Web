@@ -78,6 +78,15 @@ const HandicapSelection = ({ onSelectionChange, selectedHandicaps }) => {
       ...selections,
       [key]: !selections[key],
     };
+
+    // '해당사항 없음' 선택 시 다른 선택값을 초기화
+    if (key === 'noOption' && !selections[key]) {
+      Object.keys(updatedSelections).forEach(k => updatedSelections[k] = false);
+      updatedSelections['noOption'] = true; // '해당사항 없음'만 선택되도록
+    } else {
+      updatedSelections['noOption'] = false; // '해당사항 없음'을 해제
+    }
+
     setSelections(updatedSelections);
     onSelectionChange(updatedSelections);
   };

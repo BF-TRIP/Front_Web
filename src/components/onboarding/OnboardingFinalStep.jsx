@@ -71,29 +71,31 @@ const OnboardingFinalStep = ({ onConfirm }) => {
   
       console.log('저장된 userNumber:', response.userNumber);
       console.log('저장된 userName:', response.userName);
-
-      console.log('온보딩 후 저장된 userNumber:', onboardingData.userNumber);
-      console.log('온보딩 후 저장된 userName:', onboardingData.userName);
   
-      // iOS로 confirm 메시지 전송
-      javaScriptToIOS();
-
+      // iOS로 confirm 메시지와 userNumber 전송
+      javaScriptToIOS(response.userNumber);
+  
       navigate('/home', { state: { userNumber: response.userNumber, userName: response.userName } });
       onConfirm();
     } catch (error) {
       console.error('온보딩 데이터 전송 실패:', error);
     }
   };
+  
 
-  // iOS로 메시지를 보내는 함수
-  const javaScriptToIOS = () => {
+  // iOS로 메시지를 보내는 함수 (confirm 메시지와 userID 포함)
+  const javaScriptToIOS = (userID) => {
     if (window.webkit?.messageHandlers?.serverEvent) {
-      console.log('확인 이벤트 전송');
-      window.webkit.messageHandlers.serverEvent.postMessage('confirm');
+      console.log('확인 이벤트 전송 및 userID:', userID);
+      window.webkit.messageHandlers.serverEvent.postMessage({
+        message: 'confirm',
+        userID: userID
+      });
     } else {
       console.log('확인 이벤트 전송 불가');
     }
-  };  
+  };
+
 
   return (
     <Container>

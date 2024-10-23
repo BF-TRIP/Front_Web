@@ -35,6 +35,11 @@ const OnboardingThirdStep = ({ progress }) => {
   }, []);
 
   const handleNext = () => {
+    if (selectedStyles.length === 0) {
+      alert('최소 한 가지 여행 스타일을 선택해주세요.');
+      return;
+    }
+
     // 현재 선택된 스타일을 Context에 저장
     updateOnboardingData('selectedStyles', selectedStyles);
 

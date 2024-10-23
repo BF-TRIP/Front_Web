@@ -20,7 +20,7 @@ const InfoContainer = styled.div`
 
 const OnboardingSecondStep = ({ progress }) => {
   const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
-  const [selectedHandicaps, setSelectedHandicaps] = useState(onboardingData.selectedHandicaps || {}); // 기존 선택값 불러오기
+  const [selectedHandicaps, setSelectedHandicaps] = useState(onboardingData.selectedHandicaps || {});
   const [localProgress, setLocalProgress] = useState(progress); 
   const navigate = useNavigate(); 
 
@@ -34,6 +34,12 @@ const OnboardingSecondStep = ({ progress }) => {
   }, []);
 
   const handleNext = () => {
+    const selectedCount = Object.values(selectedHandicaps).filter(Boolean).length;
+    if (selectedCount === 0) {
+      alert('최소 한 가지 유형을 선택해주세요.');
+      return;
+    }
+
     // 현재 상태를 Context에 저장
     updateOnboardingData('selectedHandicaps', selectedHandicaps);
 
