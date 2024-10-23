@@ -23,6 +23,13 @@ const InfoContainer = styled.div`
   flex-grow: 1; 
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 0.875rem;
+  margin-top: -0.3rem;
+  margin-left: 1.1rem;
+`;
+
 const OnboardingFirstStep = ({ onBack }) => {
   const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
   const [userName, setUserName] = useState(onboardingData.userName || ''); 
@@ -31,6 +38,10 @@ const OnboardingFirstStep = ({ onBack }) => {
   const [month, setMonth] = useState(onboardingData.month || ''); 
   const [day, setDay] = useState(onboardingData.day || ''); 
   const [progress, setProgress] = useState(0); 
+
+  const [nameError, setNameError] = useState('');
+  const [genderError, setGenderError] = useState('');
+  const [dateError, setDateError] = useState('');
 
   const navigate = useNavigate(); 
 
@@ -45,36 +56,52 @@ const OnboardingFirstStep = ({ onBack }) => {
 
   const handleNameChange = (e) => {
     setUserName(e.target.value); 
+    setNameError(''); 
   };
 
   const handleGenderSelect = (selectedGender) => {
     setGender(selectedGender);
+    setGenderError('');
   };
 
   const handleYearChange = (e) => {
     setYear(e.target.value);
+    setDateError(''); 
   };
 
   const handleMonthChange = (e) => {
     setMonth(e.target.value);
+    setDateError(''); 
   };
 
   const handleDayChange = (e) => {
     setDay(e.target.value);
+    setDateError('');
   };
-  
+
+  const isFormValid = () => {
+    if (!userName || !gender || !year || !month || !day) {
+      return false;
+    }
+    return true;
+  };
+
   const handleNext = () => {
-    // 현재 상태를 Context에 저장
+    if (!isFormValid()) {
+      if (!userName) setNameError('이름을 입력해주세요.');
+      if (!gender) setGenderError('성별을 선택해주세요.');
+      if (!year || !month || !day) setDateError('생년월일을 입력해주세요.');
+      return;
+    }
+
     updateOnboardingData('userName', userName);
     updateOnboardingData('gender', gender);
     updateOnboardingData('year', year);
     updateOnboardingData('month', month);
     updateOnboardingData('day', day);
-  
-    // 다음 버튼 클릭 시 33%에서 50%로 부드럽게 증가
+
     setProgress(50);
     
-    // 0.5초 뒤에 두 번째 페이지로 이동
     setTimeout(() => {
       navigate('/onboarding-second');
     }, 500);
@@ -84,8 +111,12 @@ const OnboardingFirstStep = ({ onBack }) => {
     <Container>
       <Header onBack={onBack} progress={progress} />
       <InfoContainer> 
-        <NameInputSection value={userName} onChange={handleNameChange} /> {/* userName으로 변경 */}
+        <NameInputSection value={userName} onChange={handleNameChange} />
+        {nameError && <ErrorMessage>{nameError}</ErrorMessage>} 
+
         <GenderSelectionSection selectedGender={gender} onGenderSelect={handleGenderSelect} />
+        {genderError && <ErrorMessage>{genderError}</ErrorMessage>} 
+
         <BirthdaySection 
           year={year} 
           month={month} 
@@ -94,6 +125,7 @@ const OnboardingFirstStep = ({ onBack }) => {
           onMonthChange={handleMonthChange} 
           onDayChange={handleDayChange} 
         />
+        {dateError && <ErrorMessage>{dateError}</ErrorMessage>} 
       </InfoContainer>
       <NextButton onClick={handleNext} /> 
     </Container>
