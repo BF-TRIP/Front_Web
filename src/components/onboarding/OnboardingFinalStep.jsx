@@ -1,3 +1,5 @@
+// OnboardingFinalStep.js
+
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import { useContext } from 'react'; 
@@ -39,7 +41,8 @@ const OnboardingFinalStep = ({ onConfirm }) => {
       gender,
       year,
       selectedHandicaps,
-      selectedStyles
+      selectedStyles,
+      uuid // Context에 저장된 uuid
     } = onboardingData;
     
     const age = calculateAge(year);
@@ -54,6 +57,7 @@ const OnboardingFinalStep = ({ onConfirm }) => {
       hearingHandicap: selectedHandicaps.hearingHandicap || false,
       infantsFamily: selectedHandicaps.infantsFamily || false,
       travelType: selectedStyles,
+      uuid // uuid 추가
     };
   };
 
@@ -65,17 +69,17 @@ const OnboardingFinalStep = ({ onConfirm }) => {
       const response = await sendOnboardingData(requestData);
       console.log('응답 데이터:', response);
   
-      // userNumber와 userName을 Context에 저장
-      updateOnboardingData('userNumber', response.userNumber);
+      // uuid와 userName을 Context에 저장
+      updateOnboardingData('uuid', response.uuid);
       updateOnboardingData('userName', response.userName);
   
-      console.log('저장된 userNumber:', response.userNumber);
+      console.log('저장된 uuid:', response.uuid);
       console.log('저장된 userName:', response.userName);
   
-      // iOS로 confirm 메시지와 userNumber 전송
-      javaScriptToIOS(response.userNumber);
+      // iOS로 confirm 메시지 전송
+      javaScriptToIOS();
   
-      navigate('/home', { state: { userNumber: response.userNumber, userName: response.userName } });
+      navigate('/home', { state: { uuid: response.uuid, userName: response.userName } });
       onConfirm();
     } catch (error) {
       console.error('온보딩 데이터 전송 실패:', error);
@@ -83,19 +87,17 @@ const OnboardingFinalStep = ({ onConfirm }) => {
   };
   
 
-  // iOS로 메시지를 보내는 함수 (confirm 메시지와 userID 포함)
-  const javaScriptToIOS = (userID) => {
+  // iOS로 confirm 메시지를 보내는 함수
+  const javaScriptToIOS = () => {
     if (window.webkit?.messageHandlers?.serverEvent) {
-      console.log('확인 이벤트 전송 및 userID:', userID);
+      console.log('확인 이벤트 전송');
       window.webkit.messageHandlers.serverEvent.postMessage({
-        message: 'confirm',
-        userID: userID
+        message: 'confirm'
       });
     } else {
       console.log('확인 이벤트 전송 불가');
     }
   };
-
 
   return (
     <Container>

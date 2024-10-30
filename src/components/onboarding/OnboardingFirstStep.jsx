@@ -1,3 +1,5 @@
+// OnboardingFirstStep.js
+
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import { useState, useEffect, useContext } from 'react'; 
@@ -45,6 +47,21 @@ const OnboardingFirstStep = ({ onBack }) => {
 
   const navigate = useNavigate(); 
 
+  useEffect(() => {
+    // iOS에서 UUID를 받는 함수를 정의
+    window.iOSToJavaScript = (receivedUuid) => {
+      updateOnboardingData('uuid', receivedUuid);  
+      console.log('Received UUID from iOS:', receivedUuid);
+    };
+  
+    // 테스트용: UUID 임시로 설정
+    window.iOSToJavaScript('test-uuid-1234');  // 이 부분은 iOS 구현 없이 테스트할 때만 사용함
+  
+    return () => {
+      delete window.iOSToJavaScript;
+    };
+  }, [updateOnboardingData]);
+  
   useEffect(() => {
     // 페이지 로드 시 0에서 33%까지 부드럽게 진행
     const timeout = setTimeout(() => {
