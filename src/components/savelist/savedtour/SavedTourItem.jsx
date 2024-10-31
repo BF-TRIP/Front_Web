@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import { useState } from 'react';
-import noImageIcon from 'src/assets/images/noimage.png'; // 대체 이미지 import
+import noImageIcon from '../../../assets/images/noimage.png'; 
 
 const SavedTourCardContainer = styled.div`
   width: 10.75rem;
@@ -86,7 +86,7 @@ const SavedTourItem = ({ contentId, image, title, showCheckbox, onSelectItem }) 
         />
       )}
       <SavedTourTitle>{title}</SavedTourTitle>
-      <SavedTourImage image={image} /> {/* 대체 이미지 설정 완료 */}
+      <SavedTourImage image={image} /> 
     </SavedTourCardContainer>
   );
 };
