@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import { useState } from 'react';
+import noImageIcon from 'src/assets/images/noimage.png'; // 대체 이미지 import
 
 const SavedTourCardContainer = styled.div`
   width: 10.75rem;
@@ -31,8 +32,8 @@ const SavedTourImage = styled.div`
   width: 100%;
   height: 10.5rem;
   border-radius: 1rem;
-  background-color: #ddd;  /* 회색 배경 */
-  background-image: ${(props) => (props.image ? `url(${props.image})` : 'none')}; 
+  background-color: #ddd;
+  background-image: ${(props) => (props.image ? `url(${props.image})` : `url(${noImageIcon})`)}; // 대체 이미지 사용
   background-size: cover;
   background-position: center;
   margin-top: 0.62rem;
@@ -40,13 +41,6 @@ const SavedTourImage = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-`;
-
-const PlaceholderIcon = styled.img`
-  width: 3rem;
-  height: 3rem;
-  opacity: 0.5;
-  display: ${(props) => (props.image ? 'none' : 'block')}; 
 `;
 
 const CustomCheckbox = styled.div`
@@ -57,10 +51,9 @@ const CustomCheckbox = styled.div`
   height: 1.5rem;
   border: 1px solid #A8A8A8;
   border-radius: 50%; 
-  background-color: ${(props) => (props.checked ? '#FFF8C4;' : 'transparent')}; 
+  background-color: ${(props) => (props.checked ? '#FFF8C4' : 'transparent')}; 
   cursor: pointer;
   display: ${(props) => (props.show ? 'block' : 'none')}; 
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,9 +86,7 @@ const SavedTourItem = ({ contentId, image, title, showCheckbox, onSelectItem }) 
         />
       )}
       <SavedTourTitle>{title}</SavedTourTitle>
-      <SavedTourImage image={image}>
-        <PlaceholderIcon src="src/assets/images/image.png" alt="Placeholder Icon" image={image} />
-      </SavedTourImage>
+      <SavedTourImage image={image} /> {/* 대체 이미지 설정 완료 */}
     </SavedTourCardContainer>
   );
 };
