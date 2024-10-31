@@ -13,17 +13,17 @@ const AddListContainer = styled.div`
 const Addlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [userNumber, setUserNumber] = useState(null);
+  const [uuid, setuuid] = useState(null);
   const [courseNumber, setCourseNumber] = useState(null);
 
   useEffect(() => {
-    const storedUserNumber = localStorage.getItem('userNumber');
+    const storeduuid = localStorage.getItem('uuid');
     const receivedCourseNumber = location.state?.courseNumber; 
 
-    if (storedUserNumber) {
-      setUserNumber(storedUserNumber);
+    if (storeduuid) {
+      setuuid(storeduuid);
     } else {
-      console.warn('userNumber가 로컬스토리지에 존재하지 않습니다.');
+      console.warn('uuid가 로컬스토리지에 존재하지 않습니다.');
     }
 
     if (receivedCourseNumber) {
@@ -39,10 +39,10 @@ const Addlist = () => {
 
   return (
     <AddListContainer>
-      {userNumber && courseNumber && (
+      {uuid && courseNumber && (
         <AddToList 
           listName={location.state?.listName || '리스트 이름'}
-          userNumber={userNumber}
+          uuid={uuid}
           courseNumber={courseNumber} 
           onBack={handleBack}
         />

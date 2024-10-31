@@ -33,13 +33,13 @@ const Divider = styled.div`
   background: #F7F6FB;
 `;
 
-const MyTourList = ({ userNumber }) => {
+const MyTourList = ({ uuid }) => {
   const [tourData, setTourData] = useState([]); 
 
   useEffect(() => {
     const fetchUserCourses = async () => {
       try {
-        const data = await getUserCourses(userNumber); 
+        const data = await getUserCourses(uuid); 
         const enrichedCourses = await Promise.all(
           data.map(async (course) => {
             const courseDetails = await getCourseTourList(course.courseNumber); 
@@ -55,10 +55,10 @@ const MyTourList = ({ userNumber }) => {
       }
     };
 
-    if (userNumber) {
+    if (uuid) {
       fetchUserCourses(); 
     }
-  }, [userNumber]);
+  }, [uuid]);
 
   return (
     <>
@@ -72,7 +72,7 @@ const MyTourList = ({ userNumber }) => {
               image={tour.thumbnailImage || 'https://via.placeholder.com/300x200?text=%F0%9F%93%B7'}  // 썸네일 이미지 없을 때 기본 이미지
             />
           ))}
-          <CreateNewListButton userNumber={userNumber} /> 
+          <CreateNewListButton uuid={uuid} /> 
         </TourListContainer>
       </Container>
       <Divider />
@@ -81,7 +81,7 @@ const MyTourList = ({ userNumber }) => {
 };
 
 MyTourList.propTypes = {
-  userNumber: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
 };
 
 export default MyTourList;

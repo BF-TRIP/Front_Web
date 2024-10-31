@@ -89,7 +89,7 @@ const ScrapIcon = styled.img`
   height: 2rem;
 `;
 
-const NearbyTourCard = ({ contentTitle, addr, originalImage, description, contentId, userNumber }) => {
+const NearbyTourCard = ({ contentTitle, addr, originalImage, description, contentId, uuid }) => {
   const navigate = useNavigate(); 
   const [isScraped, setIsScraped] = useState(false); 
 
@@ -111,7 +111,7 @@ const NearbyTourCard = ({ contentTitle, addr, originalImage, description, conten
 
     if (!isScraped) {
       try {
-        const response = await saveCourse(userNumber, contentId); 
+        const response = await saveCourse(uuid, contentId); 
         console.log('저장 성공:', response);
       } catch (error) {
         console.error('저장 실패:', error);
@@ -144,7 +144,7 @@ NearbyTourCard.propTypes = {
   addr: PropTypes.string.isRequired,         
   description: PropTypes.string.isRequired, 
   contentId: PropTypes.number.isRequired, 
-  userNumber: PropTypes.number.isRequired, 
+  uuid: PropTypes.number.isRequired, 
 };
 
 export default NearbyTourCard;

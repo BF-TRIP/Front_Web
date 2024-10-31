@@ -1,11 +1,11 @@
 import axios from 'axios';
 import BASE_URL from '../config';
 
-const getRecommendedLocations = async (userNumber) => {
+const getRecommendedLocations = async (uuid) => {
     try {
-      console.log('API 요청 전송 중:', userNumber); 
+      console.log('API 요청 전송 중:', uuid); 
       const response = await axios.get(`${BASE_URL}/location/recommend`, {
-        params: { userNumber },
+        params: { uuid },
       });
       console.log('API 응답 성공:', response.data); 
       return response.data; 

@@ -10,18 +10,18 @@ const SectionContainer = styled.div`
   width: 100%;
 `;
 
-const NearbyTourSection = ({ nearbyLocations, userNumber }) => {  
+const NearbyTourSection = ({ nearbyLocations, uuid }) => {  
   return (
     <SectionContainer>
       <NearbySectionTitle title="내 위치 주변 관광지" />
-      <NearbyTourCardList tourData={nearbyLocations} userNumber={userNumber} /> 
+      <NearbyTourCardList tourData={nearbyLocations} uuid={uuid} /> 
     </SectionContainer>
   );
 };
 
 NearbyTourSection.propTypes = {
   nearbyLocations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  userNumber: PropTypes.number.isRequired, 
+  uuid: PropTypes.number.isRequired, 
 };
 
 export default NearbyTourSection;

@@ -12,7 +12,7 @@ const CardListContainer = styled.div`
   }
 `;
 
-const NearbyTourCardList = ({ tourData, userNumber }) => { 
+const NearbyTourCardList = ({ tourData, uuid }) => { 
   return (
     <CardListContainer>
       {tourData.map((tour, index) => (
@@ -23,7 +23,7 @@ const NearbyTourCardList = ({ tourData, userNumber }) => {
           addr={tour.addr}                  
           description={tour.description}   
           contentId={tour.contentId}          
-          userNumber={userNumber}             
+          uuid={uuid}             
         />
       ))}
     </CardListContainer>
@@ -40,7 +40,7 @@ NearbyTourCardList.propTypes = {
       contentId: PropTypes.number.isRequired,
     })
   ).isRequired,
-  userNumber: PropTypes.number.isRequired,  
+  uuid: PropTypes.number.isRequired,  
 };
 
 export default NearbyTourCardList;

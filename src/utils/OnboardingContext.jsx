@@ -6,7 +6,7 @@ export const OnboardingContext = createContext();
 export const OnboardingProvider = ({ children }) => {
   const [onboardingData, setOnboardingData] = useState({
     userName: localStorage.getItem('userName') || '',  
-    userNumber: localStorage.getItem('userNumber') || '', 
+    uuid: localStorage.getItem('uuid') || '', 
     gender: '',
     year: '',
     selectedHandicaps: {},
@@ -17,10 +17,10 @@ export const OnboardingProvider = ({ children }) => {
     if (onboardingData.userName) {
       localStorage.setItem('userName', onboardingData.userName);  
     }
-    if (onboardingData.userNumber) {
-      localStorage.setItem('userNumber', onboardingData.userNumber); 
+    if (onboardingData.uuid) {
+      localStorage.setItem('uuid', onboardingData.uuid); 
     }
-  }, [onboardingData.userName, onboardingData.userNumber]);
+  }, [onboardingData.userName, onboardingData.uuid]);
 
   const updateOnboardingData = (key, value) => {
     setOnboardingData(prevData => ({

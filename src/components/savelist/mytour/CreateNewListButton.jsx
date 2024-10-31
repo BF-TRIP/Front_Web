@@ -41,7 +41,7 @@ const ButtonText = styled.p`
   white-space: pre-line; 
 `;
 
-const CreateNewListButton = ({ userNumber }) => {
+const CreateNewListButton = ({ uuid }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -68,14 +68,14 @@ const CreateNewListButton = ({ userNumber }) => {
         show={isModalOpen}
         onClose={handleCloseModal}
         onConfirm={handleConfirm}
-        userNumber={userNumber} // userNumber 전달
+        uuid={uuid} // uuid 전달
       />
     </>
   );
 };
 
 CreateNewListButton.propTypes = {
-  userNumber: PropTypes.string.isRequired, // userNumber를 필수로 받음
+  uuid: PropTypes.string.isRequired, // uuid를 필수로 받음
 };
 
 export default CreateNewListButton;

@@ -103,19 +103,19 @@ const ConfirmButton = styled.button`
   }
 `;
 
-const NewListModal = ({ show, onClose, onConfirm, userNumber }) => {
+const NewListModal = ({ show, onClose, onConfirm, uuid }) => {
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('NewListModal에서 전달받은 userNumber:', userNumber);
-  }, [userNumber]);
+    console.log('NewListModal에서 전달받은 uuid:', uuid);
+  }, [uuid]);
 
   const handleCreateCourse = async () => {
     try {
-      console.log('코스 생성 요청: userNumber:', userNumber, '코스명:', courseName, '설명:', courseDescription);
-      const { courseNumber, courseName: createdCourseName } = await createCourse(userNumber, courseName, courseDescription); 
+      console.log('코스 생성 요청: uuid:', uuid, '코스명:', courseName, '설명:', courseDescription);
+      const { courseNumber, courseName: createdCourseName } = await createCourse(uuid, courseName, courseDescription); 
       console.log('코스가 생성되었습니다!');
 
       navigate('/add-list', { 
@@ -159,7 +159,7 @@ NewListModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  userNumber: PropTypes.string.isRequired, 
+  uuid: PropTypes.string.isRequired, 
 };
 
 export default NewListModal;
