@@ -90,14 +90,12 @@ const OnboardingFinalStep = ({ onConfirm }) => {
   // iOS로 confirm 메시지를 보내는 함수
   const javaScriptToIOS = () => {
     if (window.webkit?.messageHandlers?.serverEvent) {
-      console.log('확인 이벤트 전송');
-      window.webkit.messageHandlers.serverEvent.postMessage({
-        message: 'confirm'
-      });
+      console.log('Send Event: confirm');
+      window.webkit.messageHandlers.serverEvent.postMessage('confirm');
     } else {
-      console.log('확인 이벤트 전송 불가');
+      console.log('Cannot send event');
     }
-  };
+  };  
 
   return (
     <Container>
