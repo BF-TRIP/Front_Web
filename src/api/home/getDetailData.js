@@ -3,7 +3,7 @@ import BASE_URL from '../config';
 
 const getDetailData = async (contentId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/detail`, {
+    const response = await axios.get(`${BASE_URL}/location/detail`, {
       params: { contentid: contentId }
     });
     return response.data;
