@@ -3,7 +3,7 @@ import BASE_URL from '../config';
 
 const sendOnboardingData = async (onboardingData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/user/join`, onboardingData, {
+      const response = await axios.post(`${BASE_URL}/user/join`, onboardingData, {
         headers: {
           'Content-Type': 'application/json', 
         }
