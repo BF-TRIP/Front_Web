@@ -21,14 +21,14 @@ const Container = styled.div`
   scrollbar-width: none;
 `;
 
-const AddToList = ({ userNumber, courseNumber, listName, onBack }) => {
+const AddToList = ({ uuid, courseNumber, listName, onBack }) => {
   const [savedTourData, setSavedTourData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const navigate = useNavigate(); 
 
   const fetchSavedTourData = async () => {
     try {
-      const data = await getSavedTours(userNumber);
+      const data = await getSavedTours(uuid);
       const transformedData = data.map(tour => ({
         ...tour,
         thumbnailImage: tour.thumbnail_image,
@@ -42,10 +42,10 @@ const AddToList = ({ userNumber, courseNumber, listName, onBack }) => {
   };
 
   useEffect(() => {
-    if (userNumber) {
+    if (uuid) {
       fetchSavedTourData();
     }
-  }, [userNumber]);
+  }, [uuid]);
 
   const handleSelectItem = (tourId, isChecked) => {
     setSelectedItems((prevSelected) => 
@@ -80,7 +80,7 @@ const AddToList = ({ userNumber, courseNumber, listName, onBack }) => {
 };
 
 AddToList.propTypes = {
-  userNumber: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
   courseNumber: PropTypes.string.isRequired,  
   listName: PropTypes.string.isRequired,
   onBack: PropTypes.func.isRequired,

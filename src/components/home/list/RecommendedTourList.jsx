@@ -33,23 +33,23 @@ const CardWrapper = styled.div`
 
 const RecommendedTourList = () => {
   const [tourData, setTourData] = useState([]);
-  const userNumber = localStorage.getItem('userNumber'); 
+  const uuid = localStorage.getItem('uuid'); 
   const userName = localStorage.getItem('userName') || '사용자'; 
 
   useEffect(() => {
     const fetchTourData = async () => {
       try {
-        const data = await getRecommendedLocations(userNumber);  
+        const data = await getRecommendedLocations(uuid);  
         setTourData(data); 
       } catch (error) {
         console.error('추천 관광지 데이터를 불러오는 중 오류 발생:', error);
       }
     };
 
-    if (userNumber) {
+    if (uuid) {
       fetchTourData();  
     }
-  }, [userNumber]);
+  }, [uuid]);
 
   return (
     <ListContainer>

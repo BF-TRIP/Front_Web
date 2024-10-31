@@ -1,13 +1,13 @@
 import axios from 'axios';
 import BASE_URL from '../config';
 
-const getNearbyLocations = async (gpsX, gpsY, userNumber) => {
+const getNearbyLocations = async (gpsX, gpsY, uuid) => {
   try {
     const response = await axios.get(`${BASE_URL}/api/map`, {
       params: {
         gpsX,
         gpsY,
-        userNumber
+        uuid
       }
     });
     return response.data; 

@@ -106,22 +106,22 @@ const RecommendedTourCard = ({
   contentId 
 }) => {
   const [isScraped, setIsScraped] = useState(false);
-  const userNumber = localStorage.getItem('userNumber');
+  const uuid = localStorage.getItem('uuid');
   const navigate = useNavigate();  // useNavigate 사용
 
   const toggleScrap = async (e) => {
     e.stopPropagation();
     setIsScraped(!isScraped);
 
-    if (!isScraped && userNumber) {
+    if (!isScraped && uuid) {
       try {
-        const response = await saveCourse(userNumber, contentId); 
+        const response = await saveCourse(uuid, contentId); 
         console.log('저장 성공:', response);
       } catch (error) {
         console.error('저장 실패:', error);
       }
     } else {
-      console.log('이미 저장되었거나 userNumber가 없습니다.');
+      console.log('이미 저장되었거나 uuid가 없습니다.');
     }
   };
 

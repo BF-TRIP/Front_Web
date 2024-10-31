@@ -1,10 +1,10 @@
 import axios from 'axios';
 import BASE_URL from '../config';
 
-const saveCourse = async (userNumber, contentId) => {
+const saveCourse = async (uuid, contentId) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/course/save?userNumber=${userNumber}&contentId=${contentId}`
+      `${BASE_URL}/course/save?uuid=${uuid}&contentId=${contentId}`
     );
     return response.data; 
   } catch (error) {

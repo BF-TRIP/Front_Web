@@ -25,25 +25,25 @@ const SaveListContainer = styled.div`
 const Savelist = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [savedTourList, setSavedTourList] = useState([]);
-  const [localUserNumber, setLocalUserNumber] = useState(null); 
+  const [localuuid, setLocaluuid] = useState(null); 
 
   const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
-  let { userNumber } = onboardingData;
+  let { uuid } = onboardingData;
 
   useEffect(() => {
-    if (!userNumber) {
-      const savedUserNumber = localStorage.getItem('userNumber');
-      if (savedUserNumber) {
-        userNumber = savedUserNumber;
-        setLocalUserNumber(savedUserNumber); 
-        updateOnboardingData('userNumber', savedUserNumber); 
+    if (!uuid) {
+      const saveduuid = localStorage.getItem('uuid');
+      if (saveduuid) {
+        uuid = saveduuid;
+        setLocaluuid(saveduuid); 
+        updateOnboardingData('uuid', saveduuid); 
       } else {
-        console.warn('userNumber가 존재하지 않습니다. 홈으로 리디렉션 필요.');
+        console.warn('uuid가 존재하지 않습니다. 홈으로 리디렉션 필요.');
       }
     } else {
-      setLocalUserNumber(userNumber); 
+      setLocaluuid(uuid); 
     }
-  }, [userNumber, updateOnboardingData]);
+  }, [uuid, updateOnboardingData]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -59,18 +59,18 @@ const Savelist = () => {
   };
 
   useEffect(() => {
-    if (localUserNumber) {
-      console.log('Savelist에서 전달하려는 userNumber:', localUserNumber); 
-      fetchSavedTourList(localUserNumber); 
+    if (localuuid) {
+      console.log('Savelist에서 전달하려는 uuid:', localuuid); 
+      fetchSavedTourList(localuuid); 
     }
-  }, [localUserNumber]);
+  }, [localuuid]);
 
   // 화면이 다시 나타날 때마다 API 호출
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && localUserNumber) {
+      if (document.visibilityState === 'visible' && localuuid) {
         console.log('화면이 다시 보입니다. 데이터를 갱신합니다.');
-        fetchSavedTourList(localUserNumber);
+        fetchSavedTourList(localuuid);
       }
     };
 
@@ -79,11 +79,11 @@ const Savelist = () => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [localUserNumber]);
+  }, [localuuid]);
 
-  const fetchSavedTourList = async (userNumber) => {
+  const fetchSavedTourList = async (uuid) => {
     try {
-      const data = await getSavedTours(userNumber);
+      const data = await getSavedTours(uuid);
       const transformedData = data.map((tour) => ({
         contentTitle: tour.content_title,
         thumbnailImage: tour.thumbnail_image,
@@ -97,13 +97,13 @@ const Savelist = () => {
   return (
     <SaveListContainer>
       <Header />
-      <MyTourList onOpenModal={handleOpenModal} userNumber={localUserNumber} />
+      <MyTourList onOpenModal={handleOpenModal} uuid={localuuid} />
       <SavedTourList showCheckbox={false} savedTourData={savedTourList} /> 
       <NewListModal 
         show={isModalOpen} 
         onClose={handleCloseModal} 
         onConfirm={handleConfirm} 
-        userNumber={localUserNumber}
+        uuid={localuuid}
       />
     </SaveListContainer>
   );

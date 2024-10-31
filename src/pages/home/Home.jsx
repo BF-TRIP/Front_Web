@@ -95,20 +95,20 @@ const NearbySectionContainer = styled.div`
 const Home = () => {
   const { state } = useLocation();
   const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
-  const userNumber = state?.userNumber || onboardingData.userNumber || null;
+  const uuid = state?.uuid || onboardingData.uuid || null;
   const userName = state?.userName || onboardingData.userName || '사용자';
   const [nearbyLocations, setNearbyLocations] = useState([]);
 
   useEffect(() => {
-    if (state?.userNumber && !onboardingData.userNumber) {
-      updateOnboardingData('userNumber', state.userNumber);
-      localStorage.setItem('userNumber', state.userNumber); 
+    if (state?.uuid && !onboardingData.uuid) {
+      updateOnboardingData('uuid', state.uuid);
+      localStorage.setItem('uuid', state.uuid); 
     }
   }, [state, updateOnboardingData, onboardingData]);
 
   const fetchNearbyLocations = async (gpsX, gpsY) => {
     try {
-      const data = await getNearbyLocations(gpsX, gpsY, userNumber);
+      const data = await getNearbyLocations(gpsX, gpsY, uuid);
       setNearbyLocations(data);
     } catch (error) {
       console.error('내 위치 주변 관광지 데이터 불러오기 실패:', error);
@@ -120,11 +120,11 @@ const Home = () => {
     window.iOSToJavaScript = function(gpsX, gpsY) {
       console.log('iOS로부터 받은 좌표:', gpsX, gpsY);
 
-      if (userNumber) {
+      if (uuid) {
         fetchNearbyLocations(gpsX, gpsY);  
       }
     };
-  }, [userNumber]);
+  }, [uuid]);
 
 
   // iOS와의 통신 함수 추가
@@ -147,7 +147,7 @@ const Home = () => {
         <RecommendedSection userName={userName} />
       </RecommendedSectionContainer>
       <NearbySectionContainer>
-        <NearbyTourSection nearbyLocations={nearbyLocations} userNumber={userNumber} /> 
+        <NearbyTourSection nearbyLocations={nearbyLocations} uuid={uuid} /> 
       </NearbySectionContainer>
 
       <VoiceRecognitionButtonBackground>
