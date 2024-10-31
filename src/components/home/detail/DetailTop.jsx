@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import BackButton from '../../common/BackButton'; 
 import BookmarkButton from '../../common/BookmarkButton'; 
-import defaultImage from '../../../assets/images/image.png';  
+import defaultImage from '../../../assets/images/noimage.png';  
 
 const TopContainer = styled.div`
   position: relative;
@@ -39,12 +39,6 @@ const ImageSlider = styled.div`
     object-fit: cover;
   }
 `;
-
-const DefaultImage = styled.img`
-  width: 3rem;
-  height: 3rem;
-  opacity: 0.5;
-`;  
 
 const SlidePagination = styled.div`
   position: absolute;
@@ -98,10 +92,10 @@ const DetailTop = ({ images }) => {
       </Header>
 
       <ImageSlider>
-        {images.length > 0 ? (
+        {images.length > 0 && images[currentIndex] ? (
           <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
         ) : (
-          <DefaultImage src={defaultImage} alt="Default" />  
+          <img src={defaultImage} alt="Default" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         )}
         <SlidePagination>
           {currentIndex + 1} / {images.length || 1} 
