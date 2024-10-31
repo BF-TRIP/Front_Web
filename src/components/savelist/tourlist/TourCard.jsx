@@ -1,5 +1,12 @@
 import styled from 'styled-components';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
+
+import seniorIcon from '../../../assets/images/senior.png';
+import wheelchairIcon from '../../../assets/images/wheelchair.png';
+import strollerIcon from '../../../assets/images/infant.png';
+import brailleIcon from '../../../assets/images/blind.png';
+import hearingIcon from '../../../assets/images/deaf.png';
+import noImageIcon from '../../../assets/images/noimage.png';
 
 const CardContainer = styled.div`
   width: 21.75rem;
@@ -19,19 +26,13 @@ const TourImage = styled.div`
   background-image: ${(props) =>
     props.imageUrl
       ? `url(${props.imageUrl})`
-      : 'none'};
+      : `url(${noImageIcon})`};  // 이미지가 없을 때 noImageIcon 사용
   background-color: #ddd;
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const PlaceholderIcon = styled.img`
-  width: 2.5rem;
-  opacity: 0.5;
-  display: ${(props) => (props.imageUrl ? 'none' : 'block')};  // 이미지가 있으면 숨김
 `;
 
 const TourTitle = styled.h2`
@@ -72,35 +73,32 @@ const TourCard = ({
   hearingHandicapEtc // 청각장애인 관련 시설
 }) => (
   <CardContainer>
-    <TourImage imageUrl={imageUrl}>
-      {/* 이미지가 없을 경우 가운데 아이콘을 표시 */}
-      <PlaceholderIcon src="src/assets/images/image.png" alt="Placeholder Icon" imageUrl={imageUrl} />
-    </TourImage>
+    <TourImage imageUrl={imageUrl} />
     <TourTitle>{title}</TourTitle>
     <TourAddress>{address}</TourAddress>
     <IconContainer>
       <Icon 
-        src="src/assets/images/senior.png" 
+        src={seniorIcon} 
         alt="Elderly Friendly" 
         isActive={!!publicTransport} 
       />
       <Icon 
-        src="src/assets/images/wheelchair.png" 
+        src={wheelchairIcon} 
         alt="Wheelchair Accessible" 
         isActive={!!wheelchair}
       />
       <Icon 
-        src="src/assets/images/infant.png" 
+        src={strollerIcon} 
         alt="Stroller Friendly" 
         isActive={!!stroller}
       />
       <Icon 
-        src="src/assets/images/blind.png" 
+        src={brailleIcon} 
         alt="Braille Block" 
         isActive={!!braileBlock}
       />
       <Icon 
-        src="src/assets/images/deaf.png" 
+        src={hearingIcon} 
         alt="Deaf Accessibility" 
         isActive={!!hearingHandicapEtc}
       />

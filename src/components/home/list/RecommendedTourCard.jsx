@@ -11,6 +11,7 @@ import FamilyIcon from '../../../assets/images/wheelchair.png';
 import StrollerIcon from '../../../assets/images/infant.png';
 import VisualIcon from '../../../assets/images/blind.png';
 import HearingIcon from '../../../assets/images/deaf.png';
+import noImageIcon from '../../../assets/images/noimage.png'; 
 
 const CardContainer = styled.div`
   width: 100%; 
@@ -29,19 +30,13 @@ const CardImage = styled.div`
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-image: ${(props) =>
-    props.imageUrl ? `url(${props.imageUrl})` : 'none'};
+    props.imageUrl ? `url(${props.imageUrl})` : `url(${noImageIcon})`}; // 이미지가 없으면 대체 이미지 사용
   background-color: #ddd;
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const PlaceholderIcon = styled.img`
-  width: 3rem;
-  opacity: 0.5;
-  display: ${(props) => (props.imageUrl ? 'none' : 'block')};  
 `;
 
 const CardTitleRow = styled.div`
@@ -144,21 +139,16 @@ const RecommendedTourCard = ({
         stroller,
         braileBlock,
         hearingHandicapEtc,
-        
       },
     });
   };
-
-  
 
   return (
     <CardContainer onClick={handleCardClick}>
       <ScrapButton onClick={toggleScrap}>
         <ScrapIcon src={isScraped ? savedIcon : saveIcon} alt="스크랩 아이콘" />
       </ScrapButton>
-      <CardImage imageUrl={imageUrl}>
-        <PlaceholderIcon src="src/assets/images/image.png" alt="Placeholder Icon" imageUrl={imageUrl} />
-      </CardImage>
+      <CardImage imageUrl={imageUrl} />
       <CardTitleRow>
         <CardTitle>{title}</CardTitle>
         <CardSubtitle>{address}</CardSubtitle>
