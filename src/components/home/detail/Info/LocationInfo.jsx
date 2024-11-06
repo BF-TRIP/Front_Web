@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types'; 
 import styled from 'styled-components';
 
 const LocationInfoContainer = styled.div`
@@ -9,26 +11,44 @@ const LocationInfoContainer = styled.div`
   background-color: #fff;
 `;
 
-const MapPlaceholder = styled.div`
+const MapContainer = styled.div`
   width: 21rem;
   height: 21rem;
-  background-color: #e0e0e0; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.25rem;
-  color: #7d7d7d;
-  border-radius: 0.5rem; 
+  border-radius: 0.5rem;
 `;
 
-const LocationInfo = () => {
+const LocationInfo = ({ gpsX, gpsY }) => {
+  const mapContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      const { kakao } = window;
+      const mapContainer = mapContainerRef.current;
+      const options = {
+        center: new kakao.maps.LatLng(gpsY, gpsX),
+        level: 3,
+      };
+      const map = new kakao.maps.Map(mapContainer, options);
+
+      const markerPosition = new kakao.maps.LatLng(gpsY, gpsX);
+      const marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+      marker.setMap(map);
+    }
+  }, [gpsX, gpsY]);
+
   return (
     <LocationInfoContainer>
-      <MapPlaceholder>
-        Location Map
-      </MapPlaceholder>
+      <MapContainer ref={mapContainerRef} />
     </LocationInfoContainer>
   );
+};
+
+// PropTypes 추가
+LocationInfo.propTypes = {
+  gpsX: PropTypes.number.isRequired,
+  gpsY: PropTypes.number.isRequired,
 };
 
 export default LocationInfo;
