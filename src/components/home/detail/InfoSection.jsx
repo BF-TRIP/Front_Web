@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import FacilityInfo from './Info/FacilityInfo';
 import DetailedFacilityInfo from './Info/DetailedFacilityInfo';
+import LocationInfo from './Info/LocationInfo'
 
 const InfoSectionContainer = styled.div`
   padding: 1rem;
@@ -22,6 +23,7 @@ const SectionTitle = styled.div`
 `;
 
 const InfoSection = ({ details }) => {
+
   const {
     wheelchair,
     restroom,
@@ -31,7 +33,9 @@ const InfoSection = ({ details }) => {
     guideHuman,
     helpDog,
     signGuide,
-    publicTransport, // 고령자 접근성 관련 정보
+    publicTransport,
+    gpsX, 
+    gpsY,
   } = details;
 
   return (
@@ -54,6 +58,14 @@ const InfoSection = ({ details }) => {
         elderlyInfo={publicTransport || ''} 
         helpDog={helpDog || ''}  
       />
+
+      <SectionTitle isLocation>위치 정보</SectionTitle>
+      {gpsX && gpsY ? (
+        <LocationInfo gpsX={gpsX} gpsY={gpsY} />
+      ) : (
+        <p>위치 정보가 제공되지 않았습니다.</p>
+      )}
+
     </InfoSectionContainer>
   );
 };
@@ -69,11 +81,8 @@ InfoSection.propTypes = {
     helpDog: PropTypes.string,  
     signGuide: PropTypes.string,
     publicTransport: PropTypes.string, 
-    locationInfo: PropTypes.shape({
-      address: PropTypes.string,
-      gpsX: PropTypes.number,
-      gpsY: PropTypes.number,
-    }),
+    gpsX: PropTypes.number,
+    gpsY: PropTypes.number,
   }).isRequired,
 };
 
