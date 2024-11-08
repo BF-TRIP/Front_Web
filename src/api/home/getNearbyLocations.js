@@ -3,7 +3,7 @@ import BASE_URL from '../config';
 
 const getNearbyLocations = async (gpsX, gpsY, uuid) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/map`, {
+    const response = await axios.get(`${BASE_URL}/map`, {
       params: {
         gpsX,
         gpsY,
