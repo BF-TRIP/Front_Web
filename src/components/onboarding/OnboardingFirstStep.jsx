@@ -1,5 +1,3 @@
-// OnboardingFirstStep.js
-
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; 
 import { useState, useEffect, useContext } from 'react'; 
