@@ -6,6 +6,7 @@ import Header from '../../components/common/Header';
 import MyTourList from '../../components/savelist/MyTourList';
 import SavedTourList from '../../components/savelist/SavedTourList';
 import NewListModal from '../../components/savelist/newlist/NewListModal';
+import { useNavigate } from 'react-router-dom';
 
 const SaveListContainer = styled.div`
   position: relative;
@@ -28,6 +29,7 @@ const Savelist = () => {
   const [localuuid, setLocaluuid] = useState(null); 
 
   const { onboardingData, updateOnboardingData } = useContext(OnboardingContext);
+  const navigate = useNavigate();
   let { uuid } = onboardingData;
 
   useEffect(() => {
@@ -38,12 +40,30 @@ const Savelist = () => {
         setLocaluuid(saveduuid); 
         updateOnboardingData('uuid', saveduuid); 
       } else {
-        console.warn('uuid가 존재하지 않습니다. 홈으로 리디렉션 필요.');
+        console.warn('uuid가 존재하지 않습니다. 홈으로 리디렉션합니다.');
+        navigate('/home'); // UUID가 없으면 홈으로 리디렉션
       }
     } else {
       setLocaluuid(uuid); 
     }
-  }, [uuid, updateOnboardingData]);
+
+    // iOS에서 UUID를 받을 수 있도록 설정
+    window.iOSToJavaScript = function(receivedUuid) {
+      console.log('iOS로부터 받은 UUID:', receivedUuid);
+
+      // UUID가 없을 때만 업데이트
+      if (!onboardingData.uuid && receivedUuid) {
+        updateOnboardingData('uuid', receivedUuid);
+        setLocaluuid(receivedUuid);
+        localStorage.setItem('uuid', receivedUuid);
+      }
+    };
+
+    return () => {
+      // 컴포넌트 언마운트 시 함수 제거
+      delete window.iOSToJavaScript;
+    };
+  }, [uuid, updateOnboardingData, navigate, onboardingData]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

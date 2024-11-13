@@ -100,32 +100,37 @@ const Home = () => {
   const [nearbyLocations, setNearbyLocations] = useState([]);
 
   useEffect(() => {
-    if (state?.uuid && !onboardingData.uuid) {
-      updateOnboardingData('uuid', state.uuid);
-      localStorage.setItem('uuid', state.uuid); 
-    }
-  }, [state, updateOnboardingData, onboardingData]);
+    // iOS로부터 UUID를 받는 함수 설정
+    window.iOSToJavaScript = function(receivedUuid, gpsX, gpsY) {
+      console.log('iOS로부터 받은 UUID:', receivedUuid);
+      console.log('iOS로부터 받은 좌표:', gpsX, gpsY);
+
+      // UUID가 없을 때만 업데이트
+      if (!onboardingData.uuid && receivedUuid) {
+        updateOnboardingData('uuid', receivedUuid);
+        localStorage.setItem('uuid', receivedUuid); 
+      }
+
+      // 좌표가 있다면 주변 관광지 검색 실행
+      if (gpsX && gpsY) {
+        fetchNearbyLocations(gpsX, gpsY);
+      }
+    };
+
+    return () => {
+      // 컴포넌트 언마운트 시 함수 제거
+      delete window.iOSToJavaScript;
+    };
+  }, [updateOnboardingData, onboardingData]);
 
   const fetchNearbyLocations = async (gpsX, gpsY) => {
     try {
-      const data = await getNearbyLocations(gpsX, gpsY, uuid);
+      const data = await getNearbyLocations(gpsX, gpsY);
       setNearbyLocations(data);
     } catch (error) {
       console.error('내 위치 주변 관광지 데이터 불러오기 실패:', error);
     }
   };
-
-  // iOS에서 좌표 데이터를 전달받는 함수
-  useEffect(() => {
-    window.iOSToJavaScript = function(gpsX, gpsY) {
-      console.log('iOS로부터 받은 좌표:', gpsX, gpsY);
-
-      if (uuid) {
-        fetchNearbyLocations(gpsX, gpsY);  
-      }
-    };
-  }, [uuid]);
-
 
   // iOS와의 통신 함수 추가
   const javaScriptToIOS = () => {
